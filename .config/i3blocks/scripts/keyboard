@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ "$1" = "reset" ]; then
+    setxkbmap -model pc105 -layout us,no -option grp:sclk_toggle
+    exit 0
+fi
+
+case "$(xset -q|grep LED| awk '{ print $10 }')" in
+  "00000000") KBD="en" ;;
+  "00000001") KBD="EN" ;;
+  "00000002") KBD="en" ;;
+  "00000003") KBD="EN" ;;
+
+  "00001000") KBD="no" ;;
+  "00001001") KBD="NO" ;;
+  "00001002") KBD="no" ;;
+  "00001003") KBD="NO" ;;
+  *) KBD="unknown" ;;
+esac
+
+echo $KBD

@@ -1,0 +1,408 @@
+# Variables
+# ---------
+set $borders    3
+set $gapso      0
+set $gapsi      10
+set $transparent #1d202100
+
+
+# Colors
+# ------
+set $lightyellow        #ebdbb2
+set $bluegreen          #96b5b4
+set $darkblue           #65737e
+set $lightred           #bf616a
+set $red                #ee0000
+set $yellow             #B5BD56
+
+set $barText                #eff1f5
+set $barInActiveText        #a7adba
+set $barBackground          #343d46
+set $barFocusBackground     #65737e
+set $barActiveBackground    #5f676a
+set $barInActiveBackground  #4f5b66
+set $barSelectedBackground  #343d46
+set $barBorderActive        #a3be8c
+
+
+# General
+# -------
+focus_follows_mouse no
+mouse_warping none
+floating_modifier $mod
+
+
+# Font
+# ----
+font  xft:Hack, FontAwesome 6
+
+
+# Gaps
+# ----
+hide_edge_borders   none
+new_window pixel    $borders
+new_float pixel     $borders
+smart_borders       no_gaps
+gaps inner          $gapsi
+gaps outer          $gapso
+
+
+# Windows
+# -------
+#                           border      background  text          indicator
+client.focused              $bluegreen  $yellow     $lightyellow  $bluegreen
+client.focused_inactive     $darkblue   $darkblue   $lightyellow  $darkblue
+client.unfocused            $darkblue   $darkblue   $lightyellow  $darkblue
+client.urgent               $lightred   $lightred   $red          $lightred
+
+
+# Keybinds
+# --------
+# mod4 = Winkey/Super (xmodmap to show)
+# mod1 = Alt (xmodmap to show)
+set $mod Mod4
+set $alt Mod1
+set $return 36
+set $space 65
+set $pgDown 117
+set $pgUp 112
+set $a 38
+set $f 41
+set $g 42
+set $h 43
+set $i 31
+set $o 32
+set $r 27
+set $p 33
+set $c 54
+set $k 45
+set $x 53
+set $v 55
+set $q 24
+set $z 52
+set $e 26
+
+set $left 113
+set $down 116
+set $right 114
+set $up 111
+
+# Main
+bindcode $mod+$return exec --no-startup-id urxvt
+bindcode $mod+Shift+$c reload
+bindcode $mod+Shift+$r restart
+bindcode $mod+$pgUp   workspace prev
+bindcode $mod+$pgDown workspace next
+
+bindcode $mod+$x exec --no-startup-id dmenu_run  -nb "$barBackground" -nf "$barInActiveText" -sb "$barFocusBackground" -sf "$barText" -fn Tamsyn-9 -h 50 -w 1000 -x 780 -y 600 -o 0.8
+bindcode $mod+$q kill
+bindcode --release $mod+Shift+$q exec xkill
+
+bindcode $mod+Shift+$e exec --no-startup-id ~/.config/i3/scripts/shutdown
+bindcode $mod+Shift+$v exec --no-startup-id ~/.config/i3/scripts/vpn
+
+# Apps
+bindcode $mod+$alt+$g exec --no-startup-id kcolorchooser
+bindcode $mod+$alt+$p exec --no-startup-id gpmdp
+bindcode $mod+$alt+$c exec --no-startup-id xcalc
+bindcode $mod+$alt+$k exec --no-startup-id kwrite
+
+# Move cursor focus
+bindcode $mod+$left   focus left
+bindcode $mod+$down   focus down
+bindcode $mod+$up     focus up
+bindcode $mod+$right  focus right
+
+# Move windows
+bindcode $mod+Shift+$left   move left
+bindcode $mod+Shift+$down   move down
+bindcode $mod+Shift+$up     move up
+bindcode $mod+Shift+$right  move right
+
+# Split
+bindcode $mod+$h          split h
+bindcode $mod+$alt+$right split h
+bindcode $mod+$v          split v
+bindcode $mod+$alt+$down  split v
+
+# Fullscreen
+bindcode $mod+$f fullscreen
+
+# Change container layout (stacked (mod+s), tabbed (mod+t), default(mod+e))
+bindcode $mod+39 layout stacking
+bindcode $mod+28 layout tabbed
+bindcode $mod+40 layout default
+bindcode $mod+25 layout toggle split
+
+# Toggle tiling / floating
+bindcode $mod+Shift+$space floating toggle
+bindcode $mod+$alt+$space floating toggle
+
+# Change focus between tiling / floating windows
+bindcode $mod+$space focus mode_toggle
+
+# focus the parent container (mod+a)
+bindcode $mod+$a focus parent
+
+# focus the child container (mod+z)
+bindcode $mod+$z focus child
+
+# Snapper
+bindsym $mod+Escape exec --no-startup-id "~/bin/snapper clipboard"
+bindsym $mod+Shift+Escape exec --no-startup-id "~/bin/snapper url"
+bindsym $mod+Ctrl+Escape exec --no-startup-id "~/bin/snapper paint"
+
+# Locker
+bindsym $mod+l exec --no-startup-id "i3lock -f -l --nofork"
+
+# Volume things
+bindsym $mod+F5 exec --no-startup-id "~/bin/mute-sound"
+bindsym $mod+F7 exec --no-startup-id "~/bin/volume down"
+bindsym $mod+F8 exec --no-startup-id "~/bin/volume up"
+bindsym $mod+Shift+F7 exec --no-startup-id "~/bin/volume down 3000"
+bindsym $mod+Shift+F8 exec --no-startup-id "~/bin/volume up 3000"
+
+
+# Workspaces
+# ----------
+set $ws1    "1 "
+set $ws2    "2 "
+set $ws3    "3 "
+set $ws4    "4 "
+set $ws5    "5 "
+set $ws6    "6 "
+set $ws7    "7 "
+set $ws8    "8 "
+set $ws9    "9 "
+set $ws10   "10  "
+set $wsm    "  "
+set $wsmm   "  " 
+set $wsn1   "11 "
+set $wsn2   "12 "
+set $wsn3   "13 "
+set $wsn4   "14 "
+set $wsn5   "15 "
+set $wsn6   "16 "
+set $wsn7   "17 "
+set $wsn8   "18 "
+set $wsn9   "19 "
+set $wsn10  "20 "
+
+# Switch between workspaces
+bindcode $mod+10 workspace $ws1
+bindcode $mod+11 workspace $ws2
+bindcode $mod+12 workspace $ws3
+bindcode $mod+13 workspace $ws4
+bindcode $mod+14 workspace $ws5
+bindcode $mod+15 workspace $ws6
+bindcode $mod+16 workspace $ws7
+bindcode $mod+17 workspace $ws8
+bindcode $mod+18 workspace $ws9
+bindcode $mod+19 workspace $ws10
+bindcode $mod+58 workspace $wsm
+bindcode $mod+33 workspace $wsmm
+
+bindcode $mod+Ctrl+10 workspace $wsn1
+bindcode $mod+Ctrl+11 workspace $wsn2
+bindcode $mod+Ctrl+12 workspace $wsn3
+bindcode $mod+Ctrl+13 workspace $wsn4
+bindcode $mod+Ctrl+14 workspace $wsn5
+bindcode $mod+Ctrl+15 workspace $wsn6
+bindcode $mod+Ctrl+16 workspace $wsn7
+bindcode $mod+Ctrl+17 workspace $wsn8
+bindcode $mod+Ctrl+18 workspace $wsn9
+bindcode $mod+Ctrl+19 workspace $wsn10
+
+# Move focused container to workspace
+bindcode $mod+Shift+10 move container to workspace $ws1
+bindcode $mod+Shift+11 move container to workspace $ws2
+bindcode $mod+Shift+12 move container to workspace $ws3
+bindcode $mod+Shift+13 move container to workspace $ws4
+bindcode $mod+Shift+14 move container to workspace $ws5
+bindcode $mod+Shift+15 move container to workspace $ws6
+bindcode $mod+Shift+16 move container to workspace $ws7
+bindcode $mod+Shift+17 move container to workspace $ws8
+bindcode $mod+Shift+18 move container to workspace $ws9
+bindcode $mod+Shift+19 move container to workspace $ws10
+bindcode $mod+Shift+58 move container to workspace $wsm
+bindcode $mod+Shift+33 move container to workspace $wsmm
+
+bindcode $mod+Shift+Ctrl+10 move container to workspace $wsn1
+bindcode $mod+Shift+Ctrl+11 move container to workspace $wsn2
+bindcode $mod+Shift+Ctrl+12 move container to workspace $wsn3
+bindcode $mod+Shift+Ctrl+13 move container to workspace $wsn4
+bindcode $mod+Shift+Ctrl+14 move container to workspace $wsn5
+bindcode $mod+Shift+Ctrl+15 move container to workspace $wsn6
+bindcode $mod+Shift+Ctrl+16 move container to workspace $wsn7
+bindcode $mod+Shift+Ctrl+17 move container to workspace $wsn8
+bindcode $mod+Shift+Ctrl+18 move container to workspace $wsn9
+bindcode $mod+Shift+Ctrl+19 move container to workspace $wsn10
+
+
+# Assign application to workspace
+# -------------------------------
+assign [class="(?i)messenger"] $ws10
+assign [class="wmail"] $wsm
+assign [class="(?i)Google Play Music Desktop Player"] $wsmm
+
+
+# Layout for matching applications
+# --------------------------------
+for_window [class="(?i)feh"] floating enable
+for_window [class="(?i)xcalc"] floating enable
+for_window [class="(?i)display"] floating enable
+for_window [title="(?i)STOPWATCH"] floating enable
+for_window [title="(?i)kolourpaint"] floating enable
+for_window [title="(?i)gpick"] floating enable
+for_window [class="(?i)gcolor2"] floating enable
+for_window [class="(?i)gbdfed"] floating enable
+for_window [class="(?i)lxappearance"] floating enable
+for_window [instance="(?i)TeamViewer.exe"] floating enable
+for_window [class="(?i)mplayer2"] floating enable
+for_window [instance="(?i)mplayer2"] floating enable
+for_window [instance="(?i)git-cola"] floating enable
+for_window [instance="(?i)git"] floating enable
+for_window [instance="(?i)kruler"] floating enable
+for_window [title="(?i)^xzoom"] floating enable
+for_window [title="(?i)^Slack call"] floating enable
+for_window [instance="(?i)yad"] border none floating enable
+
+
+# Resize container
+# ----------------
+mode "resize" {
+  bindcode $left resize shrink width 10 px or 10 ppt
+  bindcode $down resize grow height 10 px or 10 ppt
+  bindcode $up resize shrink height 10 px or 10 ppt
+  bindcode $right resize grow width 10 px or 10 ppt
+  bindcode Shift+$left resize shrink width 1 px or 1 ppt
+  bindcode Shift+$down resize grow height 1 px or 1 ppt
+  bindcode Shift+$up resize shrink height 1 px or 1 ppt
+  bindcode Shift+$right resize grow width 1 px or 1 ppt
+  bindcode $return mode "default"
+  bindsym Escape mode "default"
+}
+bindcode $mod+$r mode "resize"
+
+
+# Bar
+# ---
+bar {
+  status_command i3blocks -c ~/.config/i3blocks/config-$(hostname)
+  i3bar_command i3bar
+  position top
+  height 24
+  font pango:Hack, FontAwesome 8
+  strip_workspace_numbers no
+  tray_padding 2
+  tray_output HDMI-0
+  separator_symbol " "
+
+  colors {
+    background $barBackground
+    focused_workspace   $barBorderActive        $barFocusBackground     $barText
+    active_workspace    $barInActiveBackground  $barActiveBackground    $barText
+    inactive_workspace  $barInActiveBackground  $barInActiveBackground  $barInActiveText
+    urgent_workspace    $lightred               $barFocusBackground     $barText
+  }
+}
+
+
+# Gaps controller (mod + shift + g)
+# ---------------------------------
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+  bindsym o      mode "$mode_gaps_outer"
+  bindsym i      mode "$mode_gaps_inner"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+  bindsym plus  gaps inner current plus 5
+  bindsym minus gaps inner current minus 5
+  bindsym 0     gaps inner current set 0
+
+  bindsym Shift+plus  gaps inner all plus 5
+  bindsym Shift+minus gaps inner all minus 5
+  bindsym Shift+0     gaps inner all set 0
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_outer" {
+  bindsym plus  gaps outer current plus 5
+  bindsym minus gaps outer current minus 5
+  bindsym 0     gaps outer current set 0
+
+  bindsym Shift+plus  gaps outer all plus 5
+  bindsym Shift+minus gaps outer all minus 5
+  bindsym Shift+0     gaps outer all set 0
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+workspace $ws1 gaps inner 0
+workspace $ws2 gaps inner 0
+workspace $ws10 gaps inner 0
+workspace $wsm gaps inner 0
+workspace $wsmm gaps inner 0
+
+
+# Monitor shortcut
+# ----------------
+set $mode_monitor Type: (n) normal, (c) clone
+set $mode_monitor_normal Normal: (a) auto, (2) auto2, (l) laptop, (h) hdmi, (v) vga
+set $mode_monitor_clone Clone: (h) hdmi, (v) vga
+bindsym $mod+Shift+d mode "$mode_monitor"
+
+mode "$mode_monitor" {
+  bindsym n      mode "$mode_monitor_normal"
+  bindsym c      mode "$mode_monitor_clone"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+mode "$mode_monitor_normal" {
+  bindsym a      exec --no-startup-id ~/bin/monitor normal auto; mode "default"
+  bindsym 2      exec --no-startup-id ~/bin/monitor normal auto2; mode "default"
+  bindsym l      exec --no-startup-id ~/bin/monitor normal laptop; mode "default"
+  bindsym h      exec --no-startup-id ~/bin/monitor normal hdmi; mode "default"
+  bindsym v      exec --no-startup-id ~/bin/monitor normal vga; mode "default"
+  bindsym Return mode "default"
+bindsym Escape mode "default"
+}
+
+mode "$mode_monitor_clone" {
+  bindsym h      exec --no-startup-id ~/bin/monitor clone hdmi; mode "default"
+  bindsym v      exec --no-startup-id ~/bin/monitor clone vga; mode "default"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+
+# Autostart
+# ---------
+#exec --no-startup-id "setxkbmap -option "caps:swapescape" &"
+#exec --no-startup-id "setxkbmap -model pc105 -layout us,no -option grp:alt_caps_toggle &"
+exec --no-startup-id "setxkbmap -model pc105 -layout us,no -option grp:sclk_toggle &"
+exec --no-startup-id "numlockx &"
+#exec --no-startup-id compton &
+#exec --no-startup-id redshift-gtk &
+#exec --no-startup-id "~/bin/pullover/pullover &"
+exec --no-startup-id "nm-applet &"
+exec --no-startup-id xautolock -time 15 -locker "i3lock -f -l --nofork"
+
+# Apps
+exec --no-startup-id "/usr/bin/rescuetime &"
+exec --no-startup-id "/opt/openwmail/openWMail &"
+exec --no-startup-id "messengerfordesktop &"
+exec --no-startup-id "/opt/Enpass/bin/runenpass.sh &"
+exec --no-startup-id "~/.fehbg &"

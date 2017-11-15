@@ -1,0 +1,25 @@
+#!/bin/bash
+
+USED=$(echo "10-($(mpstat 1 1 | awk '/all/ {print $13}')+0.5)/10" | bc)
+
+if [ $USED -gt 7 ]; then
+    COLOR="red"
+elif [ $USED -gt 5 ]; then
+    COLOR="#ffaa00"
+else
+    COLOR="#2d941a"
+fi
+
+
+echo -n "<span color='${COLOR}'>"
+for i in $(seq 1 $USED); do
+    echo -n "|"
+done
+echo -n "</span>"
+
+
+for i in $(seq 1 $[10-$USED]); do
+    echo -n "|"
+done
+echo -n " "
+

@@ -1,0 +1,18 @@
+# Other shortcuts
+alias ls="ls --color"
+alias ll="ls -altr"
+alias lll="ls -altr"
+alias lss="ls -alhSr"
+alias lln="ls -1 | sort -n"
+alias vim="gvim -v"
+alias vi="vim"
+alias digsrv="dig +short SRV _sip._udp.$1"
+alias gssh="ssh -i ~/.ssh/google_compute_engine"
+alias sshn="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+alias scpn="scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+alias date2="LC_TIME=en_US.UTF-8 date +\"%a %b %d %Y\""
+alias shutdown="sudo /usr/sbin/shutdown"
+alias cls="echo -ne '\033c'"
+alias i3config="vim ~/.config/i3/config"
+
+[[ -s "${XDG_CONFIG_HOME}/bash/aliases.private" ]] && source "${XDG_CONFIG_HOME}/bash/aliases.private"

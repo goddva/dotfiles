@@ -1,0 +1,136 @@
+
+! XFT
+!----------------------------------------------------------------------
+!Xft.dpi: 75
+Xft.dpi: 96
+Xft.antialias: 1
+Xft.rgba: rgb
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hinting: 1
+Xft.hintstyle: hintfull
+
+Xcursor.theme:	 Neutral
+*font: -xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1
+
+
+! Colores
+!----------------------------------------------------------------------
+!#include "/home/glarsen/.config/termcolours/solarized.dark.xresource"
+!!#include "/home/glarsen/.config/termcolours/default.dark.xresource"
+!!#include "/home/glarsen/.config/termcolours/codeschool.dark.xresource"
+!#include "/home/glarsen/.config/termcolours/glenn/chalk.dark.xresource"
+!#include "/home/glarsen/.config/termcolours/eighties.dark.xresource"
+#include "/home/glarsen/.config/termcolours/isotope.dark.xresource"
+!#include "/home/glarsen/.config/termcolours/embers.dark.xresource"
+!#include "/home/glarsen/.config/termcolours/brewer.dark.xresource"
+!#include "/home/glarsen/.config/termcolours/tomorrow.dark.xresource"
+!#include "/home/glarsen/.config/termcolours/railscasts.dark.xresource"
+!#include "/home/glarsen/.config/termcolours/twilight.dark.xresource"
+
+
+! URXVT
+!----------------------------------------------------------------------
+URxvt*termName: screen-256color
+URxvt.intensityStyles: false
+URxvt*iso14755: false
+URxvt*iso14755_52: false
+URxvt.depth: 32
+URxvt.urgentOnBell: true
+URxvt.visualBell: false
+URxvt*saveLines: 65535
+URxvt*mouseWheelScrollPage: true
+
+! Font
+URxvt.font: xft:Inconsolata for Powerline:pixelsize=14
+URxvt.letterSpace: 1
+
+! Scrollbar
+URxvt*scrollBar: true
+URxvt*scrollTtyOutput: false
+URxvt*scrollWithBuffer: false
+URxvt*scrollTtyKeypress: true
+URxvt*scrollBar_right: true
+URxvt*scrollstyle: plain
+URxvt*scrollColor: #343D46
+URxvt*jumpScroll: false
+
+! Extensions
+URxvt.perl-ext-common: default,clipboard,keyboard-select,url-select
+
+! Clipboard
+URxvt.keysym.C-S-C: perl:clipboard:copy
+URxvt.keysym.C-S-V: perl:clipboard:paste
+URxvt.keysym.C-S-W: perl:clipboard:paste_escaped
+!URxvt.clipboard.copycmd:  xclip -i -selection clipboard
+!URxvt.clipboard.pastecmd: xclip -o -selection clipboard
+
+! Keyboard-select
+URxvt.keysym.C-Escape: perl:keyboard-select:activate
+URxvt.keysym.C-S-S: perl:keyboard-select:search
+
+! Url-select
+URxvt.url-select.launcher: google-chrome-stable
+URxvt.url-select.underline: true
+
+! Custom keybindings
+URxvt.keysym.F8: PGPASSWORD=$(/opt/tc/bin/getconfig database password) PGUSER=$(/opt/tc/bin/getconfig database username) PGHOST=$(/opt/tc/bin/getconfig database host) psql simcom
+URxvt.keysym.C-k: echo -ne '\\033c'\n
+URxvt*keysym.C-S-K: command:\033c
+URxvt*keysym.F9: command:\033c
+
+! Transparency
+URxvt.transparent:   true
+URxvt.shading:       20
+
+! Reasigning keys
+URxvt.keysym.S-Up             : \033[1;2A
+URxvt.keysym.S-Down           : \033[1;2B
+URxvt.keysym.S-Right          : \033[1;2C
+URxvt.keysym.S-Left           : \033[1;2D
+URxvt.keysym.S-Home           : \033[1;2H
+URxvt.keysym.S-End            : \033[1;2F
+URxvt.keysym.M-Up             : \033[1;3A
+URxvt.keysym.M-Down           : \033[1;3B
+URxvt.keysym.M-Right          : \033[1;3C
+URxvt.keysym.M-Left           : \033[1;3D
+URxvt.keysym.M-Page_Up        : \033[5;3~
+URxvt.keysym.M-Page_Down      : \033[6;3~
+URxvt.keysym.M-Home           : \033[1;3H
+URxvt.keysym.M-End            : \033[1;3F
+URxvt.keysym.M-S-Up           : \033[1;4A
+URxvt.keysym.M-S-Down         : \033[1;4B
+URxvt.keysym.M-S-Right        : \033[1;4C
+URxvt.keysym.M-S-Left         : \033[1;4D
+URxvt.keysym.M-S-Home         : \033[1;4H
+URxvt.keysym.M-S-End          : \033[1;4F
+URxvt.keysym.C-Up             : \033[1;5A
+URxvt.keysym.C-Down           : \033[1;5B
+URxvt.keysym.C-Right          : \033[1;5C
+URxvt.keysym.C-Left           : \033[1;5D
+URxvt.keysym.C-Page_Up        : \033[5;5~
+URxvt.keysym.C-Page_Down      : \033[6;5~
+URxvt.keysym.C-Home           : \033[1;5H
+URxvt.keysym.C-End            : \033[1;5F
+URxvt.keysym.C-S-Up           : \033[1;6A
+URxvt.keysym.C-S-Down         : \033[1;6B
+URxvt.keysym.C-S-Right        : \033[1;6C
+URxvt.keysym.C-S-Left         : \033[1;6D
+URxvt.keysym.C-S-Home         : \033[1;6H
+URxvt.keysym.C-S-End          : \033[1;6F
+URxvt.keysym.M-C-Up           : \033[1;7A
+URxvt.keysym.M-C-Down         : \033[1;7B
+URxvt.keysym.M-C-Right        : \033[1;7C
+URxvt.keysym.M-C-Left         : \033[1;7D
+URxvt.keysym.M-C-Page_Up      : \033[5;7~
+URxvt.keysym.M-C-Page_Down    : \033[6;7~
+URxvt.keysym.M-C-Home         : \033[1;7H
+URxvt.keysym.M-C-End          : \033[1;7F
+URxvt.keysym.M-C-S-Up         : \033[1;8A
+URxvt.keysym.M-C-S-Down       : \033[1;8B
+URxvt.keysym.M-C-S-Right      : \033[1;8C
+URxvt.keysym.M-C-S-Left       : \033[1;8D
+URxvt.keysym.M-C-S-Home       : \033[1;8H
+URxvt.keysym.M-C-S-End        : \033[1;8F
+
+! vim: set ft=xdefaults:

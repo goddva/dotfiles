@@ -1,0 +1,51 @@
+#!/bin/bash
+
+URGENT_LOWER=-10
+URGENT_HIGHER=25
+
+ICON_SUNNY=""
+ICON_CLOUDY=""
+ICON_RAINY=""
+ICON_STORM=""
+ICON_SNOW=""
+ICON_FOG=""
+
+SYMBOL_CELSIUS="℃"
+
+URL="http://www.yr.no/sted/Norway/Akershus/L%C3%B8renskog/Rasta/external_box_stripe.js"
+#URL="http://www.yr.no/sted/Norway/Oslo/Oslo/Oslo/external_box_stripe.js"
+
+WEATHER_INFO=$(curl -s "${URL}" | tail -3 | head -1 | cut -d "'" -f2 | sed 's/^ *//' | sed 's/&deg;\\n//')
+WEATHER_MAIN=$(echo "${WEATHER_INFO}" | cut -d ',' -f1)
+WEATHER_TEMP=$(echo "${WEATHER_INFO}" | cut -d ',' -f2)
+
+
+if [[ "${WEATHER_MAIN}" = *Snow* ]]; then
+  echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+  echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+  echo ""
+elif [[ "${WEATHER_MAIN}" = *Rain* ]] || [[ "${WEATHER_MAIN}" = *Drizzle* ]]; then
+  echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+  echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+  echo ""
+elif [[ "${WEATHER_MAIN}" = *kyet* ]]; then
+  echo "${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+  echo "${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+  echo ""
+elif [[ "${WEATHER_MAIN}" = *Klarvær* ]]; then
+  echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+  echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+  echo ""
+elif [[ "${WEATHER_MAIN}" = *Tåke* ]] || [[ "${WEATHER_MAIN}" = *Mist* ]]; then
+  echo "${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+  echo "${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+  echo ""
+else
+  echo "${WEATHER_MAIN} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+  echo "${WEATHER_MAIN} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
+  echo ""
+fi
+
+if [[ "${WEATHER_TEMP}" -lt "${URGENT_LOWER}" ]] || [[ "${WEATHER_TEMP}" -gt "${URGENT_HIGHER}" ]]; then
+  exit 33
+fi

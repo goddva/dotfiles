@@ -1,0 +1,16 @@
+
+
+yad \
+  --title Glenn1 \
+  --text="Brightness" \
+  --scale \
+  --value 50 \
+  --button gtk-ok:0 \
+  --width=100 \
+  --height=200 \
+  --posx=$[$(xdotool getmouselocation | awk '{print $1}' | cut -d ':' -f2)-50] \
+  --posy=24 \
+  --vertical \
+  --text-align center \
+  --close-on-unfocus
+

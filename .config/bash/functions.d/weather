@@ -1,0 +1,6 @@
+weather() {
+    curl -s "http://www.yr.no/sted/Norway/Oslo/Oslo/Oslo/external_box_stripe.js" | perl -ne 's/&deg;/°/g; s/\\n//g; undef $/;/tid.*?'"'"'.*?'"'"'[ ]+(.*?)'"'"'.*?<\/p>/sx && printf "OSLO: %s",$1,"\n\n"';
+    echo "";
+}
+
+# http://www.yr.no/sted/Norge/Akershus/L%C3%B8renskog/Rasta/external_box_stripe.js

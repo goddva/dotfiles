@@ -1,0 +1,21 @@
+#!/bin/bash
+
+function getMails {
+  MAIL=`curl -u "$1:$2" --silent https://mail.google.com/mail/feed/atom`
+  CON=`echo $MAIL | grep -c "<fullcount>"`
+  NUM=`echo $MAIL | grep -o "<entry>" | wc -l`
+  RES="err"
+
+  if [ $CON = 1 ]; then
+    echo "$NUM"
+  fi
+}
+
+cat ~/.private/accounts | grep -vE "^$" | while read account; do
+    if [ "$NAME" != "" ]; then echo -n " / "; fi
+    NAME=$(echo $account | cut -d '=' -f1)
+    USERNAME=$(echo $account | cut -d '"' -f2 | cut -d '|' -f1)
+    PASSWORD=$(echo $account | cut -d '"' -f2 | cut -d '|' -f2)
+    echo -n $NAME $(getMails "$USERNAME" "$PASSWORD")
+done
+

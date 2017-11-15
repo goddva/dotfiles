@@ -1,0 +1,27 @@
+#!/bin/bash
+cd `dirname $0`
+IMAGE="/tmp/screenshot.png"
+maim -s -c 1,0,0,0.6 -p 10 ${IMAGE}
+if [ "$?" != "0" ]; then exit; fi;
+if [ "$IMAGE" == "" ]; then exit; fi;
+echo Image is done
+
+if [ "$1" == "clipboard" ]; then
+    /bin/xclip -selection clipboard -t image/png -i ${IMAGE}
+    notify-send "Snapper" "Image content is copied to clipboard"
+    exit 0;
+fi
+
+if [ "$1" == "paint" ]; then
+    kolourpaint ${IMAGE}
+    /bin/xclip -selection clipboard -t image/png -i ${IMAGE}
+    notify-send "Snapper" "Image content is copied to clipboard"
+    exit 0;
+fi
+
+if [ "$1" == "url" ]; then
+    URL=$(curl -X POST -s -F "image=@${IMAGE}" "http://--URL--")
+    echo "Upload is done, url is: $URL"
+    echo "$URL" | /bin/xclip -selection clipboard
+    notify-send "Snapper" "Image URL is copied to clipboard: $URL"
+fi

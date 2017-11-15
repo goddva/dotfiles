@@ -1,0 +1,148 @@
+#!/bin/sh
+
+SCREEN_RESOLUTION_EXLUDE="3840"
+#SCREEN_RESOLUTION_EXLUDE="xxx"
+DPI=75
+
+function autosize {
+    LIST=$((xrandr; echo END) | grep "$1 connected" -A100 | tail -n+2 | grep -E "Screen|disconnected|connected|END" -m1 -B100 | grep -Ev "${SCREEN_RESOLUTION_EXLUDE}" | head -n-1 | head -1 | awk '{print $1}')
+    if [ "$LIST" == "" ]; then
+        LIST=$(xrandr | grep "$1 connected" -A100  | grep -Ev "${SCREEN_RESOLUTION_EXLUDE}" | tail -n+2 | head -n-1 | head -1 | awk '{print $1}')
+    fi
+    echo $LIST
+}
+
+function x {
+    echo $(echo $SIZE | cut -d 'x' -f1)
+}
+
+LID=$(grep open /proc/acpi/button/lid/LID/state)
+DP1=$(xrandr | grep "DP-1" | grep " connected ")
+HDMI=$(xrandr | grep HDMI | grep " connected ")
+VGA=$(xrandr | grep VGA | grep " connected ")
+SIZE="1920x1080"
+
+if [ "$3" != "" ]; then
+    SIZE=$3
+fi
+            echo "bo $1 - $2 o" > /tmp/glenn
+
+case "$1" in
+    normal)
+        case "$2" in
+            auto | auto2)
+                case "$2" in
+                   auto)
+                        POS=0
+                        OUTPUTS+=("DP-0")
+                        OUTPUTS+=("DP-1")
+                        OUTPUTS+=("HDMI-0")
+                        OUTPUTS+=("VGA-0")
+                        if [ "$LID" != "" ]; then OUTPUTS+=("DP-2"); fi
+                        ;;
+                    auto2)
+                        POS=0
+                        if [ "$LID" != "" ]; then OUTPUTS+=("DP-2"); fi
+                        OUTPUTS+=("DP-0")
+                        OUTPUTS+=("DP-1")
+                        OUTPUTS+=("HDMI-0")
+                        OUTPUTS+=("VGA-0")
+                        ;;
+                esac
+
+
+                for OUTPUT in ${OUTPUTS[@]}; do
+                    if [ "$(xrandr | grep "$OUTPUT" | grep " connected ")" != "" ]; then
+                        SIZE=$(autosize $OUTPUT)
+                        X=$(x $SIZE)
+                        XRANDER+="--output $OUTPUT --mode $SIZE --pos ${POS}x0 "
+                        POS=$[ $POS + $X ]
+                    else
+                        XRANDER+="--output $OUTPUT --off "
+                    fi
+                done
+
+                echo $XRANDER;
+                xrandr --dpi ${DPI} $XRANDER;
+
+
+#                # DP-2
+#                SIZE=$(autosize DP-2)
+#                X=$(x $SIZE)
+#
+#                if [ "$LID" != "" ]; then
+#                    DP="--output DP-2 --mode $SIZE"
+#                else
+#                    DP="--output DP-2 --off"
+#                fi
+#
+#                if [ "$HDMI" != "" ]; then
+#                	if [ "$VGA" != "" ]; then
+#                        # echo xrandr --output HDMI-0 --mode $(autosize HDMI-0) --pos 0x0 --output VGA-0 --mode $(autosize VGA-0) --pos 1920x0 $DP --pos 3840x0
+#                        echo xrandr --output DP-1 --mode 1920x1080 --pos 0x0           --output HDMI-0 --mode 1920x1080 --pos 1920x0               --output VGA-0 --mode 1920x1200 --pos 3840x0
+#                	else
+#                        xrandr $DP --pos 0x0 --output HDMI-0 --mode $(autosize HDMI-0) --pos 1920x0 --output VGA-0 --off 
+#                	fi
+#                else
+#                		#xrandr --output HDMI-0 --off --output VGA-0 --off $DP --pos 0x0
+#                        xrandr $DP --pos 0x0 --output DP-1 --mode $(autosize DP-1) --pos 1920x0 --output VGA-0 --off 
+#                fi
+                ;;
+            laptop)
+                xrandr --output HDMI-0 --off --output VGA-0 --off $DP
+                ;;
+            hdmi)
+                if [ "$HDMI" == "" ]; then
+                    echo "Could not detect HDMI signals...";
+                    exit 1;
+                fi
+                xrandr --output HDMI-0 --mode $(autosize "HDMI-0") --pos 0x0 --output VGA-0 --off --output DP-2 --off
+                echo xrandr --output HDMI-0 --mode $(autosize "HDMI-0") --pos 0x0 --output VGA-0 --off --output DP-2 --off
+                ;;
+            vga)
+                if [ "$VGA" == "" ]; then
+                    echo "Could not detect VGA signals...";
+                    exit 1;
+                fi
+                xrandr --output HDMI-0 --off --output VGA-0 --mode $(autosize "VGA-0") --pos 0x0 --output DP-2 --off
+                ;;
+            *)
+                echo "Usage: $0 normal <auto|laptop|hdmi|vga> [external size]";
+                exit 0
+        esac
+        ;;
+    clone)
+        case "$2" in
+            hdmi)
+                if [ "$HDMI" == "" ]; then
+                    echo "Could not detect HDMI signals...";
+                    exit 1;
+                fi
+                xrandr --output HDMI-0 --mode $SIZE --pos 0x0 --output VGA-0 --off --output DP-2 --mode 1920x1080 --pos 0x0
+                ;;
+            vga)
+                if [ "$VGA" == "" ]; then
+                    echo "Could not detect VGA signals...";
+                    exit 1;
+                fi
+                xrandr --output HDMI-0 --off --output VGA-0 --mode $SIZE --pos 0x0 --output DP-2 --mode 1920x1080 --pos 0x0
+                ;;
+            *)
+                echo "Usage: $0 clone <hdmi|vga> [external size]";
+                exit 0
+        esac
+        ;;
+    *)
+        echo "Usage: $0 <normal|clone> <auto|laptop|hdmi|vga> [external size]";
+        exit 0
+esac
+
+# Fix background image
+sh ~/.fehbg
+
+exit 0
+
+
+
+
+source $HOME/.xsession

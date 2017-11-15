@@ -1,0 +1,4 @@
+#!/bin/bash
+
+du --max-depth=1 "$1" | sort -n | awk '{printf "%*.2f GB\t%*.2f MB\t%s\n", 10, $1/1024/1024, 10, $1/1024, $2}'
+

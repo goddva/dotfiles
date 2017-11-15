@@ -1,0 +1,16 @@
+export PATH=$PATH:$HOME/.local/bin:$HOME/bin
+export EDITOR=vim
+
+# Start X on autologin to terminal
+if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
+  exec startx
+fi
+
+# Aliases
+source "${XDG_CONFIG_HOME}/bash/aliases"
+
+# Prompt
+source "${XDG_CONFIG_HOME}/bash/prompt"
+
+# Load functions
+for function in ${XDG_CONFIG_HOME}/bash/functions.d/*; do source "${function}"; done

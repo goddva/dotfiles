@@ -1,0 +1,28 @@
+#!/bin/bash
+
+date +'%a %d %b'
+
+if [ "$BLOCK_BUTTON" == "1" ]; then
+    LC_TIME="en_GB.UTF-8" yad \
+		--title "Calendar" \
+		--no-buttons \
+		--posx=$[$(xdotool getmouselocation | awk '{print $1}' | cut -d ':' -f2)-50] \
+		--posy=24 \
+		--calendar \
+		--close-on-unfocus
+	return;
+fi
+
+if [ "$BLOCK_BUTTON" == "3" ]; then
+   # nohup urxvt -title "STOPWATCH" -geometry 50x7 -e /usr/bin/urtimer -S -s &
+   # sleep 0.1
+   # xdotool getactivewindow windowmove x 24 &
+   # return;
+    LC_TIME="en_GB.UTF-8" yad \
+		--title "Calendar" \
+		--no-buttons \
+		--posx=$[$(xdotool getmouselocation | awk '{print $1}' | cut -d ':' -f2)-50] \
+		--posy=24 \
+		--calendar
+	return;
+fi

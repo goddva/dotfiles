@@ -1,0 +1,28 @@
+#!/bin/bash
+
+OPTION=""
+declare -A ACTIONS
+
+for config in $(/usr/bin/nmcli -f type,uuid,device,name connection \
+    | awk '/^vpn / {printf "%s|%s|",$2,$3; $1=$2=$3=""; gsub(/ /, "", $0); print $1}'); do
+
+    if [ "$OPTION" != "" ]; then OPTION="${OPTION}\n"; fi
+    UUID=$(echo "$config" | cut -d '|' -f1)
+    ACTIVE=$(echo "$config" | cut -d '|' -f2)
+    NAME=$(echo "$config" | cut -d '|' -f3)
+
+    if [ "$ACTIVE" != "--" ]; then
+        OPTION="DISCONNECT ($NAME)\n${OPTION}"
+        ACTIONS["DISCONNECT ($NAME)"]="down $UUID"
+    fi
+
+    ACTIONS["$NAME"]="up $UUID"
+
+
+    OPTION="${OPTION}${NAME}"
+done
+select=$(echo -e $OPTION | dmenu  -nb "#CED0D1" -nf "#3C3437" -fn Tamsyn-9 -h 40 -w 990 -x 670 -y 500 -i -l 8 -p "VPN: ")
+
+if [ "${ACTIONS[$select]}" != "" ]; then
+    nmcli connection ${ACTIONS[$select]}
+fi
