@@ -2,23 +2,18 @@
 
 if [ "$BLOCK_BUTTON" == "1" ]; then
     notify-send "package updater" "updating packages"
-    urxvt -title "PACMAN UPDATE" -e /usr/bin/sudo -p "[PACMAN UPDATE] password for glarsen:" pacman -Syu &
-    urxvt -title "PACMAN AUR UPDATE" -e /usr/bin/sudo -p "[PACMAN AUR UPDATE] password for glarsen:" yaourt -Syu &
+    urxvt -title "PACMAN+AUR UPDATE" -e yaourt -Syua && echo Press any key to close && read &
     return;
 fi
 
-if [ "$BLOCK_BUTTON" == "3" ]; then
-    notify-send "Package refresher" "Please wait, while we check for new updates..."
-    urxvt -title "PACMAN REFRESHER" -e /usr/bin/sudo -p "[PACMAN REFRESHER] password for glarsen:" pacman -Syy &
-    urxvt -title "PACMAN AUR REFRESHER" -e /usr/bin/sudo -p "[PACMAN AUR REFRESHER] password for glarsen:" yaourt -Syy &
-    return;
-fi
 
-UPDATES=$(pacman -Qu | wc -l)
-UPDATES=$[ $UPDATES + $(yaourt -Qu | wc -l)]
+# Trigger the script thats doing the magic of not running an update as root, instead of "yaourt -Syya"
+checkupdates &> /dev/null
 
-echo "   ${UPDATES} "
+CHECKUPDATES_DB="${TMPDIR:-/tmp}/checkup-db-${USER}/"
+UPDATES=$(yaourt -Qua --dbpath ${CHECKUPDATES_DB} | wc -l)
 
 [[ "${UPDATES}" = "0" ]] && exit 0
 
+echo "   ${UPDATES} "
 exit 33
