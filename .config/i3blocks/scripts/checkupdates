@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 
+if [ "$1" == "update" ]; then
+    yaourt -Syua
+    echo Press any key to close
+    read
+    exit 0
+fi
+
 if [ "$BLOCK_BUTTON" == "1" ]; then
     notify-send "package updater" "updating packages"
-    urxvt -title "PACMAN+AUR UPDATE" -e yaourt -Syua && echo Press any key to close && read &
+    urxvt -title "PACMAN+AUR UPDATE" -e $0 update &
     return;
 fi
 
