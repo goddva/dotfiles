@@ -81,6 +81,7 @@ set $v 55
 set $q 24
 set $z 52
 set $e 26
+set $backslash 51
 
 set $left 113
 set $down 116
@@ -106,6 +107,7 @@ bindcode $mod+$alt+$g exec --no-startup-id kcolorchooser
 bindcode $mod+$alt+$p exec --no-startup-id gpmdp
 bindcode $mod+$alt+$c exec --no-startup-id xcalc
 bindcode $mod+$alt+$k exec --no-startup-id kwrite
+bindcode $mod+$alt+$backslash exec --no-startup-id /opt/Enpass/bin/runenpass.sh
 
 # Move cursor focus
 bindcode $mod+$left   focus left

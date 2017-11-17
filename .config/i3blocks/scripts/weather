@@ -20,11 +20,11 @@ WEATHER_MAIN=$(echo "${WEATHER_INFO}" | cut -d ',' -f1)
 WEATHER_TEMP=$(echo "${WEATHER_INFO}" | cut -d ',' -f2)
 
 
-if [[ "${WEATHER_MAIN}" = *Snow* ]]; then
+if [[ "${WEATHER_MAIN}" = *nø* ]]; then
   echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo ""
-elif [[ "${WEATHER_MAIN}" = *Rain* ]] || [[ "${WEATHER_MAIN}" = *Drizzle* ]]; then
+elif [[ "${WEATHER_MAIN}" = *Regn* ]] || [[ "${WEATHER_MAIN}" = *regn* ]]; then
   echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo ""
@@ -36,7 +36,7 @@ elif [[ "${WEATHER_MAIN}" = *Klarvær* ]]; then
   echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo ""
-elif [[ "${WEATHER_MAIN}" = *Tåke* ]] || [[ "${WEATHER_MAIN}" = *Mist* ]]; then
+elif [[ "${WEATHER_MAIN}" = *åke* ]] || [[ "${WEATHER_MAIN}" = *Mist* ]]; then
   echo "${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo "${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
   echo ""
