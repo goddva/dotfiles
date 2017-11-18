@@ -82,6 +82,10 @@ set $q 24
 set $z 52
 set $e 26
 set $backslash 51
+set $F5 71
+set $F7 73
+set $F8 74
+
 
 set $left 113
 set $down 116
@@ -158,11 +162,11 @@ bindsym $mod+Ctrl+Escape exec --no-startup-id "~/bin/snapper paint"
 bindsym $mod+l exec --no-startup-id "i3lock -f -l --nofork"
 
 # Volume things
-bindsym $mod+F5 exec --no-startup-id "~/bin/mute-sound"
-bindsym $mod+F7 exec --no-startup-id "~/bin/volume down"
-bindsym $mod+F8 exec --no-startup-id "~/bin/volume up"
-bindsym $mod+Shift+F7 exec --no-startup-id "~/bin/volume down 3000"
-bindsym $mod+Shift+F8 exec --no-startup-id "~/bin/volume up 3000"
+bindcode $mod+$F5 exec --no-startup-id "pulseaudio-ctl mute"
+bindcode $mod+$F7 exec --no-startup-id "pulseaudio-ctl down"
+bindcode $mod+$F8 exec --no-startup-id "pulseaudio-ctl up"
+bindcode $mod+Shift+$F7 exec --no-startup-id "pulseaudio-ctl down 20"
+bindcode $mod+Shift+$F8 exec --no-startup-id "pulseaudio-ctl up 20"
 
 
 # Workspaces
