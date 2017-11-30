@@ -48,7 +48,7 @@ URxvt.letterSpace: 1
 ! Scrollbar
 URxvt*scrollBar: true
 URxvt*scrollTtyOutput: false
-URxvt*scrollWithBuffer: false
+URxvt*scrollWithBuffer: true
 URxvt*scrollTtyKeypress: true
 URxvt*scrollBar_right: true
 URxvt*scrollstyle: plain
