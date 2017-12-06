@@ -1,6 +1,6 @@
 #!/bin/bash
 
-date +'%a %d %b'
+echo "$(date +'%a %d %b')  "
 
 if [ "$BLOCK_BUTTON" == "1" ]; then
     LC_TIME="en_GB.UTF-8" yad \

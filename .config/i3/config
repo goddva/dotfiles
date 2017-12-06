@@ -1,8 +1,11 @@
 # Variables
 # ---------
+#set $borders    3
+#set $gapso      0
+#set $gapsi      10
 set $borders    3
-set $gapso      0
-set $gapsi      10
+set $gapso      15
+set $gapsi      15
 set $transparent #1d202100
 
 
@@ -39,9 +42,11 @@ font  xft:Hack, FontAwesome 6
 
 # Gaps
 # ----
-hide_edge_borders   none
+#hide_edge_borders   none
+hide_edge_borders   both
 new_window pixel    $borders
-new_float pixel     $borders
+#new_float pixel     $borders
+new_float pixel     3
 smart_borders       no_gaps
 gaps inner          $gapsi
 gaps outer          $gapso
@@ -50,10 +55,14 @@ gaps outer          $gapso
 # Windows
 # -------
 #                           border      background  text          indicator
-client.focused              $bluegreen  $yellow     $lightyellow  $bluegreen
-client.focused_inactive     $darkblue   $darkblue   $lightyellow  $darkblue
-client.unfocused            $darkblue   $darkblue   $lightyellow  $darkblue
+client.focused              $yellow  $barBackground     $lightyellow  $lightred
+#client.focused              $bluegreen  $yellow     $lightyellow  $bluegreen
+client.focused_inactive     $yellow   $transparent   $lightyellow  $transparent
+client.unfocused            $yellow   $transparent   $lightyellow  $transparent
+#client.unfocused            $darkblue   $darkblue   $lightyellow  $darkblue
 client.urgent               $lightred   $lightred   $red          $lightred
+
+
 
 
 # Keybinds
@@ -306,9 +315,12 @@ bar {
 
   colors {
     background $barBackground
-    focused_workspace   $barBorderActive        $barFocusBackground     $barText
-    active_workspace    $barInActiveBackground  $barActiveBackground    $barText
-    inactive_workspace  $barInActiveBackground  $barInActiveBackground  $barInActiveText
+    focused_workspace   $barInActiveBackground  $barFocusBackground     $barText
+    #focused_workspace   $barBorderActive        $barFocusBackground     $barText
+    active_workspace    $barBackground  $barBackground    $barText
+    #active_workspace    $barInActiveBackground  $barActiveBackground    $barText
+    inactive_workspace  $barBackground  $barBackground  $barInActiveText
+    #inactive_workspace  $barInActiveBackground  $barInActiveBackground  $barInActiveText
     urgent_workspace    $lightred               $barFocusBackground     $barText
   }
 }
@@ -355,11 +367,11 @@ mode "$mode_gaps_outer" {
   bindsym Escape mode "default"
 }
 
-workspace $ws1 gaps inner 0
-workspace $ws2 gaps inner 0
-workspace $ws10 gaps inner 0
-workspace $wsm gaps inner 0
-workspace $wsmm gaps inner 0
+#workspace $ws1 gaps inner 0
+#workspace $ws2 gaps inner 0
+#workspace $ws10 gaps inner 0
+#workspace $wsm gaps inner 0
+#workspace $wsmm gaps inner 0
 
 
 # Monitor shortcut
@@ -412,3 +424,4 @@ exec --no-startup-id "/opt/openwmail/openWMail &"
 exec --no-startup-id "messengerfordesktop &"
 exec --no-startup-id "/opt/Enpass/bin/runenpass.sh &"
 exec --no-startup-id "~/.fehbg &"
+#exec --no-startup-id "compton --config ~/.config/compton.conf &"

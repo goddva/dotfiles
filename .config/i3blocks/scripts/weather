@@ -19,31 +19,21 @@ WEATHER_INFO=$(curl -s "${URL}" | tail -3 | head -1 | cut -d "'" -f2 | sed 's/^ 
 WEATHER_MAIN=$(echo "${WEATHER_INFO}" | cut -d ',' -f1)
 WEATHER_TEMP=$(echo "${WEATHER_INFO}" | cut -d ',' -f2)
 
+BORDER="  "
 
-if [[ "${WEATHER_MAIN}" = *nø* ]]; then
-  echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo ""
+
+if [[ "${WEATHER_MAIN}" = *nø* ]] || [[ "${WEATHER_MAIN}" = *ludd* ]]; then
+  echo "${BORDER}${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
 elif [[ "${WEATHER_MAIN}" = *Regn* ]] || [[ "${WEATHER_MAIN}" = *regn* ]]; then
-  echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo ""
+  echo "${BORDER}${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
 elif [[ "${WEATHER_MAIN}" = *kyet* ]]; then
-  echo "${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo "${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo ""
+  echo "${BORDER}${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
 elif [[ "${WEATHER_MAIN}" = *Klarvær* ]]; then
-  echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo ""
+  echo "${BORDER}${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
 elif [[ "${WEATHER_MAIN}" = *åke* ]] || [[ "${WEATHER_MAIN}" = *Mist* ]]; then
-  echo "${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo "${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo ""
+  echo "${BORDER}${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
 else
-  echo "${WEATHER_MAIN} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo "${WEATHER_MAIN} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo ""
+  echo "${BORDER}${WEATHER_MAIN} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
 fi
 
 if [[ "${WEATHER_TEMP}" -lt "${URGENT_LOWER}" ]] || [[ "${WEATHER_TEMP}" -gt "${URGENT_HIGHER}" ]]; then

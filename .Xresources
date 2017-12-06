@@ -81,7 +81,7 @@ URxvt*keysym.F9: command:\033c
 
 ! Transparency
 URxvt.transparent:   true
-URxvt.shading:       20
+URxvt.shading:       50
 
 ! Reasigning keys
 URxvt.keysym.S-Up             : \033[1;2A

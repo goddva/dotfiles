@@ -54,24 +54,24 @@ if ($status eq 'Discharging') {
 if ($status eq 'Discharging' && $acpi !~ 'discharging at zero rate') {
 
     if ($percent < 10) {
-        print "  ";
+        print "    ";
     } elsif ($percent <= 25) {
-        print "  ";
+        print "    ";
     } elsif ($percent <= 50) {
-        print "  ";
+        print "    ";
     } elsif ($percent <= 85) {
-        print "  ";
+        print "    ";
     } else {
-        print "  ";
+        print "    ";
     }
 }
 
 else {
     if ($percent >= 85) {
-        print "  ";
+        print "    ";
         exit(0);
     }
-    print " ";
+    print "    ";
 }
 
 # print text

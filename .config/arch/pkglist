@@ -64,6 +64,7 @@ cava
 breeze
 breeze-kde4
 breeze-gtk
+qt5-styleplugins
 xclip
 maim
 feh
@@ -74,6 +75,7 @@ whois
 unzip
 zip
 steam
+lib32-nvidia-utils
 numlockx
 xautolock
 dunst
@@ -110,3 +112,5 @@ ttf-font-awesome
 okular
 cups
 system-config-printer
+aspell
+aspell-en

@@ -1,1 +1,1 @@
-[[ -z "$(iwgetid -r)" ]] || echo "$(iwgetid -r) "
+[[ -z "$(iwgetid -r)" ]] || echo "$(iwgetid -r)  "

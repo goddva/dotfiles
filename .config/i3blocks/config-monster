@@ -1,9 +1,9 @@
 separator=false
-separator_block_width=5
+separator_block_width=10
 border_top=0
 border_left=0
 border_right=0
-border_bottom=2
+border_bottom=3
 command=$HOME/.config/i3blocks/scripts/$BLOCK_NAME
 
 [music]
@@ -68,7 +68,7 @@ border=#C779C5
 
 [brightness]
 label=   
-command=printf "%.0f " $(xbacklight -get)
+command=printf "%.0f  " $(xbacklight -get)
 interval=10
 signal=2
 border=#d79921
@@ -79,9 +79,19 @@ label=  
 interval=2
 border=#98971a
 
+[network]
+label=   
+interval=2
+border=#6075b1
+
 [weather]
 interval=600
 border=#458588
+
+[bitcoin]
+label=   
+interval=300
+border=#cfcfcf
 
 [calendar]
 label=   

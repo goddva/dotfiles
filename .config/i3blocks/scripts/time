@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "<b>`date +'%T'`</b> "
+echo "<b>`date +'%T'`</b>  "

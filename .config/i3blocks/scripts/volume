@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "$(amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print "0\n"} else {printf "%d\n", $2}}' | head -1) "
+echo "$(amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print "0\n"} else {printf "%d\n", $2}}' | head -1)  "
 
 if [ "$BLOCK_BUTTON" == "1" ]; then
     ~/bin/mute-sound &
