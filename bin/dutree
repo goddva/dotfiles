@@ -1,4 +1,10 @@
 #!/bin/bash
 
-du --max-depth=1 "$1" | sort -n | awk '{printf "%*.2f GB\t%*.2f MB\t%s\n", 10, $1/1024/1024, 10, $1/1024, $2}'
+if [ "$1" == "" ]; then
+	FOLDER="."
+else
+	FOLDER=$1
+fi
+
+du --max-depth=1 "$FOLDER" | sort -n | awk '{printf "%*.2f GB\t%*.2f MB\t%s\n", 10, $1/1024/1024, 10, $1/1024, $2}'
 
