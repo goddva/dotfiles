@@ -1,19 +1,25 @@
 #!/bin/bash
 
-GPMD="/home/glarsen/.config/Google Play Music Desktop Player/json_store/playback.json"
+GPMD="$HOME/.config/Google Play Music Desktop Player/json_store/playback.json"
 
 if [ ! "$(find "${GPMD}" -mmin -10)" ]; then
   exit 0;
 fi
 
-DATA=$(cat "${GPMD}" | jq '(.playing|tostring) + "|" + .song.title + "|" + .song.artist' -r)
+DATA=$(cat "${GPMD}" | jq '(.playing|tostring) + "|" + .song.title + "|" + .song.artist + "|" + (.time.current|tostring) + "|" + (.time.total|tostring)' -r)
 PLAYING=$(echo $DATA | cut -d "|" -f1)
 SONG=$(echo $DATA | cut -d "|" -f2)
 ARTIST=$(echo $DATA | cut -d "|" -f3)
+CURRENT=$(echo $DATA | cut -d "|" -f4)
+TOTAL=$(echo $DATA | cut -d "|" -f5)
+LEFT=$[ ($TOTAL - $CURRENT) / 1000 ]
+LEFT_MIN=$(printf "%02d" $[ $LEFT / 60 ])
+LEFT_SEC=$(printf "%02d" $[ $LEFT - ($LEFT_MIN * 60) ])
+LEFT="${LEFT_MIN}:${LEFT_SEC}"
 
 if [ "$SONG" == "" ]; then exit 0; fi
 
-echo -n " $SONG ($ARTIST)"
+echo -n " $SONG ($ARTIST) | $LEFT "
 
 if [ "$PLAYING" = "true" ]; then
   echo " [➤]"
