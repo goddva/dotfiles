@@ -15,5 +15,6 @@ alias shutdown="sudo /usr/sbin/shutdown"
 alias cls="echo -ne '\033c'"
 alias i3config="vim ~/.config/i3/config"
 alias keyboard-reset="setxkbmap -model pc105 -layout us,no -option grp:sclk_toggle"
+alias k="kubectl"
 
 [[ -s "${XDG_CONFIG_HOME}/bash/aliases.private" ]] && source "${XDG_CONFIG_HOME}/bash/aliases.private"
