@@ -8,6 +8,7 @@ if [ "$BLOCK_BUTTON" == "1" ]; then
 		--no-buttons \
 		--posx=$[$(xdotool getmouselocation | awk '{print $1}' | cut -d ':' -f2)-50] \
 		--posy=24 \
+		--show-weeks \
 		--calendar \
 		--close-on-unfocus
 	return;
@@ -23,6 +24,7 @@ if [ "$BLOCK_BUTTON" == "3" ]; then
 		--no-buttons \
 		--posx=$[$(xdotool getmouselocation | awk '{print $1}' | cut -d ':' -f2)-50] \
 		--posy=24 \
+		--show-weeks \
 		--calendar
 	return;
 fi
