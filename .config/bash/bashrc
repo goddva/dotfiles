@@ -1,5 +1,9 @@
 export PATH=$PATH:$HOME/.local/bin:$HOME/bin:~/.yarn/bin
+export PATH=$PATH:/home/glarsen/Projects/Bulldozer/bulldozer-scripts/bin
+export PATH=$PATH:/home/glarsen/Projects/omnicus/omnicus-scripts/bin
 export EDITOR=vim
+export HISTCONTROL=ignorespace
+export GPG_TTY=$(tty)
 
 # Start X on autologin to terminal
 if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
