@@ -1,0 +1,17 @@
+[user]
+	email = glenn.larsen@gmail.com
+	name = Glenn O. Larsen
+	signingkey = 6DFF6F1934F0AA82
+[cola]
+	spellcheck = false
+[alias]
+	st = status
+	co = checkout
+	up = pull --rebase --autostash
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[commit]
+	gpgsign = true
