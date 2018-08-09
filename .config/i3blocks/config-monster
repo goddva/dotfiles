@@ -6,6 +6,13 @@ border_right=0
 border_bottom=3
 command=$HOME/.config/i3blocks/scripts/$BLOCK_NAME
 
+[pomodoro]
+label= 
+interval=2
+separator=true
+separator_block_width=45
+border=#ebdbb2
+
 [music]
 label=   
 interval=2

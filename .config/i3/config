@@ -8,6 +8,8 @@ set $gapso      15
 set $gapsi      15
 set $transparent #1d202100
 
+set $yPos	500
+set $xPos	460
 
 # Colors
 # ------
@@ -108,10 +110,10 @@ bindcode $mod+Shift+$r restart
 bindcode $mod+$pgUp   workspace prev
 bindcode $mod+$pgDown workspace next
 
-bindcode $mod+$x exec --no-startup-id dmenu_run  -nb "$barBackground" -nf "$barInActiveText" -sb "$barFocusBackground" -sf "$barText" -fn Tamsyn-9 -h 50 -w 1000 -x 780 -y 600 -o 0.8
 bindcode $mod+$q kill
 bindcode --release $mod+Shift+$q exec xkill
 
+bindcode $mod+$x exec --no-startup-id "barBackground=$barBackground barInActiveText=$barInActiveText barFocusBackground=$barFocusBackground barText=$barText ~/.config/i3/scripts/starter"
 bindcode $mod+Shift+$e exec --no-startup-id ~/.config/i3/scripts/shutdown
 bindcode $mod+Shift+$v exec --no-startup-id ~/.config/i3/scripts/vpn
 
@@ -168,7 +170,7 @@ bindsym $mod+Shift+Escape exec --no-startup-id "~/bin/snapper url"
 bindsym $mod+Ctrl+Escape exec --no-startup-id "~/bin/snapper paint"
 
 # Locker
-bindsym $mod+l exec --no-startup-id "i3lock -f -l --nofork"
+bindsym $mod+l exec --no-startup-id "~/.config/i3/scripts/lock"
 
 # Volume things
 bindcode $mod+$F5 exec --no-startup-id "pulseaudio-ctl mute"
@@ -272,6 +274,7 @@ for_window [title="(?i)gpick"] floating enable
 for_window [class="(?i)gcolor2"] floating enable
 for_window [class="(?i)gbdfed"] floating enable
 for_window [class="(?i)lxappearance"] floating enable
+for_window [class="(?i)gnome-pomodoro"] floating enable
 for_window [instance="(?i)TeamViewer.exe"] floating enable
 for_window [class="(?i)mplayer2"] floating enable
 for_window [instance="(?i)mplayer2"] floating enable
@@ -310,8 +313,7 @@ bar {
   font pango:Hack, FontAwesome 8
   strip_workspace_numbers no
   tray_padding 2
-  tray_output HDMI-0
-  separator_symbol " "
+  separator_symbol " " 
 
   colors {
     background $barBackground
@@ -410,13 +412,13 @@ mode "$mode_monitor_clone" {
 # ---------
 #exec --no-startup-id "setxkbmap -option "caps:swapescape" &"
 #exec --no-startup-id "setxkbmap -model pc105 -layout us,no -option grp:alt_caps_toggle &"
-exec --no-startup-id "setxkbmap -model pc105 -layout us,no -option grp:sclk_toggle &"
+exec --no-startup-id setxkbmap -model pc105 -layout us,no -option grp:sclk_toggle
 exec --no-startup-id "numlockx &"
 #exec --no-startup-id compton &
 #exec --no-startup-id redshift-gtk &
 #exec --no-startup-id "~/bin/pullover/pullover &"
 exec --no-startup-id "nm-applet &"
-exec --no-startup-id xautolock -time 15 -locker "i3lock -f -l --nofork"
+exec --no-startup-id xautolock -time 15 -locker "~/.config/i3/scripts/lock"
 
 # Apps
 exec --no-startup-id "/usr/bin/rescuetime &"
@@ -424,4 +426,6 @@ exec --no-startup-id "/opt/openwmail/openWMail &"
 exec --no-startup-id "messengerfordesktop &"
 exec --no-startup-id "/opt/Enpass/bin/runenpass.sh &"
 exec --no-startup-id "~/.fehbg &"
+exec --no-startup-id "/usr/bin/gnome-pomodoro --no-default-window &"
+exec --no-startup-id "/usr/bin/i3-gnome-pomodoro daemon &"
 #exec --no-startup-id "compton --config ~/.config/compton.conf &"

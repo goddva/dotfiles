@@ -1,15 +1,18 @@
 #!/bin/bash
-select=$(echo -e 'CANCEL\nSHUTDOWN\nSUSPEND\nLOGOUT' | dmenu  -nb "#CED0D1" -nf "#3C3437" -fn Tamsyn -h 50 -w 780 -x 890 -y 600 -i -p "What kind of exit: ")
+select=$(echo -e 'CANCEL\nREBOOT\nSHUTDOWN\nSUSPEND\nLOGOUT' | dmenu  -nb "#CED0D1" -nf "#3C3437" -fn Tamsyn -h 50 -w 780 -x 890 -y 600 -i -p "What kind of exit: ")
 
 case "$select" in
     CANCEL)
         exit 0;
         ;;
+    REBOOT)
+        reboot;
+        ;;
     SHUTDOWN)
         ~/bin/shutdown.sh yes
         ;;
     SUSPEND)
-        i3lock -f -l --nofork
+        i3lock -f -l --nofork &
         systemctl suspend
         ;;
     LOGOUT)

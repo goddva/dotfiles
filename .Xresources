@@ -42,8 +42,12 @@ URxvt*saveLines: 65535
 URxvt*mouseWheelScrollPage: true
 
 ! Font
-URxvt.font: xft:Inconsolata for Powerline:pixelsize=14
-URxvt.letterSpace: 1
+!URxvt.font: xft:Inconsolata for Powerline:pixelsize=14
+!URxvt.boldFont: xft:Inconsolata Bold for Powerline
+!!URxvt.boldFont: xft:Inconsolata-Bold:style=bold,pixelsize=16
+URxvt.font: xft:Droid Sans Mono for Powerline:pixelsize=12
+!URxvt.boldFont: xft:Inconsolata-Bold::pixelsize=14
+URxvt.letterSpace: 0
 
 ! Scrollbar
 URxvt*scrollBar: true

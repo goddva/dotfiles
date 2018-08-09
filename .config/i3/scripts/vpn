@@ -1,5 +1,16 @@
 #!/bin/bash
 
+SCREEN_SIZE=$(xrandr | awk '/*/ {print $1}' | head -1)
+
+X_POS=$[$(echo "${SCREEN_SIZE}" | cut -d 'x' -f1) / 2 - 495]
+Y_POS=$[$(echo "${SCREEN_SIZE}" | cut -d 'x' -f2) / 2 - 160]
+
+if [ "${X_POS}" == "" ]; then
+    X_POS=670
+    Y_POS=500
+fi
+
+
 OPTION=""
 declare -A ACTIONS
 
@@ -21,7 +32,7 @@ for config in $(/usr/bin/nmcli -f type,uuid,device,name connection \
 
     OPTION="${OPTION}${NAME}"
 done
-select=$(echo -e $OPTION | dmenu  -nb "#CED0D1" -nf "#3C3437" -fn Tamsyn-9 -h 40 -w 990 -x 670 -y 500 -i -l 8 -p "VPN: ")
+select=$(echo -e $OPTION | dmenu  -nb "#CED0D1" -nf "#3C3437" -fn Tamsyn-9 -h 40 -w 990 -x $X_POS -y $Y_POS -i -l 8 -p "VPN: ")
 
 if [ "${ACTIONS[$select]}" != "" ]; then
     nmcli connection ${ACTIONS[$select]}
