@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+PUBLIC_KEY=$(cat ~/.ssh/id_rsa.pub)
+
+if [ "$1" = "" ]; then
+    echo "Usage: $0 <username@server>";
+    exit 1;
+fi
+
+ssh $1 << EOF
+if [ ! -d ~/.ssh/ ]; then
+  echo "Creating .ssh folder, as it did not exist"
+  mkdir ~/.ssh/
+  touch ~/.ssh/authorized_keys
+  chmod 0700 ~/.ssh/
+  chmod 0600 ~/.ssh/authorized_keys
+fi
+
+grep "${PUBLIC_KEY}" ~/.ssh/authorized_keys &> /dev/null
+if [ \$? = 0 ]; then
+  echo "Public key allready exists in ~/.ssh/authorized_keys"
+else
+  echo ${PUBLIC_KEY} >> ~/.ssh/authorized_keys
+  echo "Public key has been added"
+fi
+EOF
