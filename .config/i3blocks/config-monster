@@ -6,6 +6,13 @@ border_right=0
 border_bottom=3
 command=$HOME/.config/i3blocks/scripts/$BLOCK_NAME
 
+[kubectl-context]
+label=   
+interval=2
+separator=true
+separator_block_width=45
+border=#69c065
+
 [pomodoro]
 label= 
 interval=2
