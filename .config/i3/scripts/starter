@@ -1,0 +1,34 @@
+#!/bin/bash
+
+SCREEN_SIZE=$(xrandr | awk '/*/ {print $1}' | head -1)
+
+X_POS=$[$(echo "${SCREEN_SIZE}" | cut -d 'x' -f1) / 2 - 500]
+Y_POS=$[$(echo "${SCREEN_SIZE}" | cut -d 'x' -f2) / 2 - 25]
+
+if [ "${X_POS}" == "" ]; then
+    X_POS=500
+    Y_POS=460
+fi
+
+# Make sure we have needed variables
+barText="${barText:-#eff1f5}"
+barInActiveText="${barInActiveText:-#a7adba}"
+barBackground="${barBackground:-#343d46}"
+barFocusBackground="${barFocusBackground:-#65737e}"
+barActiveBackground="${barActiveBackground:-#5f676a}"
+barInActiveBackground="${barInActiveBackground:-#4f5b66}"
+barSelectedBackground="${barSelectedBackground:-#343d46}"
+barBorderActive="${barBorderActive:-#a3be8c}"
+
+dmenu_run \
+  -nb "$barBackground" \
+  -nf "$barInActiveText" \
+  -sb "$barFocusBackground" \
+  -sf "$barText" \
+  -fn Tamsyn-9 \
+  -h 50 \
+  -w 1000 \
+  -x $X_POS \
+  -y $Y_POS \
+  -o 0.8
+
