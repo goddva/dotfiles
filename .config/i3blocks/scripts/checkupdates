@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 if [ "$1" == "update" ]; then
-    yaourt -Syua
+    pacaur -Syu
+    # yaourt -Syua
     echo Press any key to close
     read
     exit 0
