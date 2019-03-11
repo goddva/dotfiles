@@ -45,7 +45,7 @@ URxvt*mouseWheelScrollPage: true
 !URxvt.font: xft:Inconsolata for Powerline:pixelsize=14
 !URxvt.boldFont: xft:Inconsolata Bold for Powerline
 !!URxvt.boldFont: xft:Inconsolata-Bold:style=bold,pixelsize=16
-URxvt.font: xft:Droid Sans Mono for Powerline:pixelsize=12
+URxvt.font: xft:Fira Code:style=Retina:pixelsize=12:antialias=true:hinting=true
 !URxvt.boldFont: xft:Inconsolata-Bold::pixelsize=14
 URxvt.letterSpace: 0
 
