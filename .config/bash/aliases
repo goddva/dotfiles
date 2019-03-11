@@ -17,5 +17,6 @@ alias i3config="vim ~/.config/i3/config"
 alias keyboard-reset="setxkbmap -model pc105 -layout us,no -option grp:sclk_toggle"
 alias k="kubectl"
 alias watch='watch ' # A trailing space in VALUE causes the next word to be checked for alias substitution when the alias is expanded.
+alias podman="sudo podman"
 
 [[ -s "${XDG_CONFIG_HOME}/bash/aliases.private" ]] && source "${XDG_CONFIG_HOME}/bash/aliases.private"
