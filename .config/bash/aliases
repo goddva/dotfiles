@@ -1,11 +1,14 @@
 # Other shortcuts
-alias ls="ls --color"
+alias ls=lsd
+#alias ls="ls --color"
 alias ll="ls -altr"
 alias lll="ls -altr"
 alias lss="ls -alhSr"
 alias lln="ls -1 | sort -n"
-alias vim="gvim -v"
-alias vi="vim"
+#alias vim="gvim -v"
+#alias vi="vim"
+alias vim="nvim"
+alias vi="nvim"
 alias digsrv="dig +short SRV _sip._udp.$1"
 alias gssh="ssh -i ~/.ssh/google_compute_engine"
 alias sshn="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
@@ -18,5 +21,11 @@ alias keyboard-reset="setxkbmap -model pc105 -layout us,no -option grp:sclk_togg
 alias k="kubectl"
 alias watch='watch ' # A trailing space in VALUE causes the next word to be checked for alias substitution when the alias is expanded.
 alias podman="sudo podman"
+alias k3d="sudo DOCKER_HOST=unix:///run/podman/podman.sock k3d"
+alias ngrok='TERM=linux ngrok'
+alias omni="cd ~/Projects/omnicus/"
+
+# Set window title to the project name
+alias yarn="echo -en \"\\033]0; YARN - \$(jq -r .name package.json) \a\" && yarn"
 
 [[ -s "${XDG_CONFIG_HOME}/bash/aliases.private" ]] && source "${XDG_CONFIG_HOME}/bash/aliases.private"

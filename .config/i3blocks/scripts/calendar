@@ -1,16 +1,23 @@
 #!/bin/bash
 
-echo "$(date +'%a %d %b')  "
+# echo "$(date +'%a %d %b')  "
+# echo "<span foreground=\"#D88568\"><b>$(date +'%a %d %b %T')</b></span>"
+
+/home/glarsen/.config/i3blocks/scripts/dateandtime
+
+
 
 if [ "$BLOCK_BUTTON" == "1" ]; then
-    LC_TIME="en_GB.UTF-8" yad \
+		#--posx=$[$(xdotool getmouselocation | awk '{print $1}' | cut -d ':' -f2)-50] \
+    i3-msg -q exec "LC_TIME=\"en_GB.UTF-8\" yad \
 		--title "Calendar" \
+		--sticky \
 		--no-buttons \
-		--posx=$[$(xdotool getmouselocation | awk '{print $1}' | cut -d ':' -f2)-50] \
+		--posx="2280" \
 		--posy=24 \
 		--show-weeks \
 		--calendar \
-		--close-on-unfocus
+		--close-on-unfocus"
 	return;
 fi
 
@@ -19,12 +26,14 @@ if [ "$BLOCK_BUTTON" == "3" ]; then
    # sleep 0.1
    # xdotool getactivewindow windowmove x 24 &
    # return;
-    LC_TIME="en_GB.UTF-8" yad \
+		#--posx=$[$(xdotool getmouselocation | awk '{print $1}' | cut -d ':' -f2)-50] \
+    i3-msg -q exec "LC_TIME=\"en_GB.UTF-8\" yad \
 		--title "Calendar" \
+		--sticky \
 		--no-buttons \
-		--posx=$[$(xdotool getmouselocation | awk '{print $1}' | cut -d ':' -f2)-50] \
+		--posx=2280 \
 		--posy=24 \
 		--show-weeks \
-		--calendar
+		--calendar"
 	return;
 fi

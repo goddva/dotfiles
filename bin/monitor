@@ -1,7 +1,37 @@
 #!/bin/sh
 
+
+if [ "$1" == "game" ]; then
+	xrandr \
+		--output DVI-D-0 --off \
+		--output DP-0 --off \
+		--output DP-1 --off \
+		--output HDMI-0 --off \
+		--output HDMI-1 --mode 1920x1080 --pos 0x0
+	exit 0
+fi
+
+xrandr \
+	--output DVI-D-0 --off \
+	--output DP-0 --off \
+	--output DP-1 --off \
+	--output HDMI-0 --mode 3840x2160 --pos 3840x0 \
+	--output HDMI-1 --mode 3840x2160 --pos 0x0
+
+exit 0
+
+
+
+
+
+
+
+
+
+
 SCREEN_RESOLUTION_EXLUDE="3840"
 #SCREEN_RESOLUTION_EXLUDE="xxx"
+
 DPI=75
 
 function autosize {

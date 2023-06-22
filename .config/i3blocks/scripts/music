@@ -1,18 +1,28 @@
 #!/bin/bash
 
-GPMD="$HOME/.config/Google Play Music Desktop Player/json_store/playback.json"
+DATA=$(curl -s localhost:9863/query | jq '(.player.isPaused|tostring) + "|" + .track.title + "|" + .track.author + "|" + (.player.seekbarCurrentPosition|tostring) + "|" + (.track.duration|tostring)' -r)
 
-if [ ! "$(find "${GPMD}" -mmin -10)" ]; then
+if [ "${DATA}" == "" ]; then
   exit 0;
 fi
 
-DATA=$(cat "${GPMD}" | jq '(.playing|tostring) + "|" + .song.title + "|" + .song.artist + "|" + (.time.current|tostring) + "|" + (.time.total|tostring)' -r)
-PLAYING=$(echo $DATA | cut -d "|" -f1)
+PAUSED=$(echo $DATA | cut -d "|" -f1)
+
+# If button was clicked
+if [ "${button}" == "1" ] || [ "${1}" == "pause" ]; then
+  if [ "$PAUSED" = "false" ]; then
+    curl -s -X POST localhost:9863/query -d '{"command": "track-pause"}' &> /dev/null
+  else
+    curl -s -X POST localhost:9863/query -d '{"command": "track-play"}' &> /dev/null
+  fi
+fi
+
 SONG=$(echo $DATA | cut -d "|" -f2)
 ARTIST=$(echo $DATA | cut -d "|" -f3)
 CURRENT=$(echo $DATA | cut -d "|" -f4)
 TOTAL=$(echo $DATA | cut -d "|" -f5)
-LEFT=$[ ($TOTAL - $CURRENT) / 1000 ]
+
+LEFT=$[ ($TOTAL - $CURRENT) ]
 LEFT_MIN=$(printf "%02d" $[ $LEFT / 60 ])
 LEFT_SEC=$(printf "%02d" $[ $LEFT - ($LEFT_MIN * 60) ])
 LEFT="${LEFT_MIN}:${LEFT_SEC}"
@@ -21,8 +31,38 @@ if [ "$SONG" == "" ]; then exit 0; fi
 
 echo -n " $SONG ($ARTIST) | $LEFT "
 
-if [ "$PLAYING" = "true" ]; then
+if [ "$PAUSED" = "false" ]; then
   echo " [➤]"
 else
   echo " [Ⅱ]"
 fi
+
+echo $DATA $button
+
+exit 0
+
+  "player": {
+    "hasSong": true,
+    "isPaused": false,
+    "volumePercent": 20,
+    "seekbarCurrentPosition": 259,
+    "seekbarCurrentPositionHuman": "4:19",
+    "statePercent": 0.6108490566037735,
+    "likeStatus": "INDIFFERENT",
+    "repeatType": "NONE"
+  },
+  "track": {
+    "author": "Gigi D'Agostino",
+    "title": "L'amour Toujours (Tanzen Vision Rmx)",
+    "album": "Tecno Fes",
+    "cover": "https://lh3.googleusercontent.com/s_wwsjJByEp2tJVAKnrmxM27Wo5obD6RJ_Iih6w_EwSwrnJoTlg6RE_01Boi9kKsuYSW1dc0ssBNKGB7=w544-h544-l90-rj",
+    "duration": 424,
+    "durationHuman": "7:04",
+    "url": "https://www.youtube.com/watch?list=RDTMAK5uy_kset8DisdE7LSD4TNjEVvrKRTmG7a56sY&v=fL-K80sj21o",
+    "id": "fL-K80sj21o",
+    "isVideo": false,
+    "isAdvertisement": false,
+    "inLibrary": false
+  }
+}
+

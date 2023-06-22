@@ -1,3 +1,4 @@
 #!/bin/bash
 NAME=$(xtitle)
-echo "$NAME"
+echo "<span foreground=\"#767676\"><i>${NAME}</i></span>"
+

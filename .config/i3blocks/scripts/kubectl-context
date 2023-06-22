@@ -1,3 +1,11 @@
 #!/usr/bin/env bash
 
-echo "$(kubectl config current-context)  "
+NS=$(kubectl config view --minify -o json | jq -r '.contexts[0].context.namespace')
+
+if [ "${NS}" == "default" ]; then NS=""; fi
+
+if [ "${NS}" != "" ]; then NS=" [${NS}]"; fi
+
+echo "$(kubectl config current-context)${NS}"
+
+# echo "$(kubectl config current-context)  "

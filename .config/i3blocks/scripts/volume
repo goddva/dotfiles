@@ -1,11 +1,28 @@
 #!/bin/bash
 
-echo "$(amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print "0\n"} else {printf "%d\n", $2}}' | head -1)  "
+#BLUETOOTH_INDEX=$(pacmd list-cards | grep -E "(index:|name:)" | grep "bluez" -B1 | awk '{print $2}' | head -1)
+#CURRENT_PROFILE=$(pacmd list-cards | grep "index: ${BLUETOOTH_INDEX}" -A50 | grep "active profile" | head -1 | cut -d '<' -f2 | cut -d '>' -f1)
 
-if [ "$BLOCK_BUTTON" == "1" ]; then
-    ~/bin/mute-sound &
-fi
+BLUETOOTH_ICON=""
+
+#if [ "${CURRENT_PROFILE}" == "a2dp_sink" ]; then
+#    BLUETOOTH_ICON=""
+#elif [ "${CURRENT_PROFILE}" == "headset_head_unit" ]; then
+#    BLUETOOTH_ICON=""
+#fi
+
+echo "${BLUETOOTH_ICON} $(amixer get Master | grep "${snd_cha}" | awk -F'[]%[]' '/%/ {if ($7 == "off") {print "0\n"} else {printf "%d\n", $2}}' | head -1) "
+
+#if [ "$BLOCK_BUTTON" == "1" ]; then
+#    if [ "${CURRENT_PROFILE}" == "a2dp_sink" ]; then
+#        pacmd set-card-profile ${BLUETOOTH_INDEX} headset_head_unit
+#    else
+#        pacmd set-card-profile ${BLUETOOTH_INDEX} a2dp_sink
+#    fi
+#fi
+
+#echo "$BLOCK_BUTTON $button $x $y" >> /tmp/glenn
 
 if [ "$BLOCK_BUTTON" == "3" ]; then
-    pavucontrol &
+    i3-msg -q exec pavucontrol
 fi

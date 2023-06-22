@@ -1,13 +1,32 @@
-export PATH=$PATH:$HOME/.local/bin:$HOME/bin:~/.yarn/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/bin:~/.yarn/bin:$HOME/.npm/global/bin/
+export PATH=$PATH:$HOME/.krew/bin
 export PATH=$PATH:/home/glarsen/Projects/Bulldozer/bulldozer-scripts/bin
 export PATH=$PATH:/home/glarsen/Projects/omnicus/omnicus-scripts/bin
-export EDITOR=vim
+export EDITOR=nvim
 export HISTCONTROL=ignorespace
 export GPG_TTY=$(tty)
+# export TERM=xterm-256color
+export TERM=st-256color
+# export TERM=kitty
+
+export ANDROID_SDK=$HOME/Android/Sdk
+export ANDROID_HOME=$ANDROID_SDK
+export NODE_PATH=$HOME/.npm/bin
+export PATH=$PATH:$HOME/Android/Sdk/platform-tools
+
+# BUN
+BUN_INSTALL="/home/glarsen/.bun"
+PATH="$BUN_INSTALL/bin:$PATH"
+
+USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+# Set keyboard shortcut to switch language
+# setxkbmap -model pc105 -layout us,no -option grp:sclk_toggle
+setxkbmap -model pc105 -layout us,no -option grp:shifts_toggle
 
 # Start X on autologin to terminal
 if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
-  exec startx
+	exec /usr/bin/startx
 fi
 
 # Aliases

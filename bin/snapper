@@ -20,7 +20,7 @@ if [ "$1" == "paint" ]; then
 fi
 
 if [ "$1" == "url" ]; then
-    URL=$(curl -X POST -s -F "image=@${IMAGE}" "http://--URL--")
+    URL=$(curl -X POST -s -F "image=@${IMAGE}" "http://i.zxl.no/uPlOaDEr.php")
     echo "Upload is done, url is: $URL"
     echo "$URL" | /bin/xclip -selection clipboard
     notify-send "Snapper" "Image URL is copied to clipboard: $URL"

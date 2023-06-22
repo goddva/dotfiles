@@ -5,7 +5,7 @@
 [cola]
 	spellcheck = false
 [alias]
-	st = status
+	st = status --untracked-files=no
 	co = checkout
 	up = pull --rebase --autostash
 [filter "lfs"]
@@ -15,3 +15,16 @@
 	required = true
 [commit]
 	gpgsign = true
+[pull]
+	rebase = true
+
+[fetch]
+	prune = true
+[diff]
+	colorMoved = zebra
+[gpg]
+	program = /home/glarsen/bin/gpg2-display-aware
+[http]
+	cookiefile = /home/glarsen/.gitcookies
+[safe]
+	directory = /opt/flutter

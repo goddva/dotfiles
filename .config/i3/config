@@ -8,33 +8,60 @@ set $gapso      15
 set $gapsi      15
 set $transparent #1d202100
 
+#set $yPos	600 # 50 h
+#set $xPos	780 # 1000 w
 set $yPos	500
 set $xPos	460
 
+
 # Colors
 # ------
-set $lightyellow        #ebdbb2
-set $bluegreen          #96b5b4
-set $darkblue           #65737e
-set $lightred           #bf616a
-set $red                #ee0000
-set $yellow             #B5BD56
+# set $lightyellow        #ebdbb2
+# set $bluegreen          #96b5b4
+# set $darkblue           #65737e
+# set $lightred           #bf616a
+# set $red                #ee0000
+# set $yellow             #B5BD56
 
-set $barText                #eff1f5
-set $barInActiveText        #a7adba
-set $barBackground          #343d46
-set $barFocusBackground     #65737e
-set $barActiveBackground    #5f676a
-set $barInActiveBackground  #4f5b66
-set $barSelectedBackground  #343d46
-set $barBorderActive        #a3be8c
+# set $barText                #eff1f5
+# set $barInActiveText        #a7adba
+# set $barBackground          #343d46
+# set $barFocusBackground     #65737e
+# set $barActiveBackground    #5f676a
+# set $barInActiveBackground  #4f5b66
+# set $barSelectedBackground  #343d46
+# set $barBorderActive        #a3be8c
 
+# Base 16 - iA Dark
+set $base00 #1a1a1a
+set $base01 #222222
+set $base03 #767676
+set $base04 #b8b8b8
+set $base02 #1d414d
+set $base05 #cccccc
+set $base06 #e8e8e8
+set $base07 #f8f8f8
+set $base08 #d88568
+set $base09 #d86868
+set $base0A #b99353
+set $base0B #83a471
+set $base0C #7c9cae
+set $base0D #8eccdd
+set $base0E #b98eb2
+set $base0F #8b6c37
+
+set $barText                #8eccdd
+set $barBackground          #222222
+set $barFocusBackground     #1A1A1A
+set $barInActiveText        #d88568
 
 # General
 # -------
 focus_follows_mouse no
 mouse_warping none
 floating_modifier $mod
+popup_during_fullscreen smart
+workspace_auto_back_and_forth yes
 
 
 # Font
@@ -57,12 +84,18 @@ gaps outer          $gapso
 # Windows
 # -------
 #                           border      background  text          indicator
-client.focused              $yellow  $barBackground     $lightyellow  $lightred
-#client.focused              $bluegreen  $yellow     $lightyellow  $bluegreen
-client.focused_inactive     $yellow   $transparent   $lightyellow  $transparent
-client.unfocused            $yellow   $transparent   $lightyellow  $transparent
-#client.unfocused            $darkblue   $darkblue   $lightyellow  $darkblue
-client.urgent               $lightred   $lightred   $red          $lightred
+client.focused          $base05 $base0D $base00 $base0D $base0C
+client.focused_inactive $base01 $base01 $base05 $base03 $base01
+client.unfocused        $base01 $base00 $base05 $base01 $base01
+client.urgent           $base08 $base08 $base00 $base08 $base08
+client.placeholder      $base00 $base00 $base05 $base00 $base00
+client.background       $base07
+# client.focused              $yellow  $barBackground     $lightyellow  $lightred
+# client.focused_inactive     $yellow   $transparent   $lightyellow  $transparent
+# client.unfocused            $yellow   $transparent   $lightyellow  $transparent
+# client.urgent               $lightred   $lightred   $red          $lightred
+# #client.focused              $bluegreen  $yellow     $lightyellow  $bluegreen
+# #client.unfocused            $darkblue   $darkblue   $lightyellow  $darkblue
 
 
 
@@ -73,29 +106,43 @@ client.urgent               $lightred   $lightred   $red          $lightred
 # mod1 = Alt (xmodmap to show)
 set $mod Mod4
 set $alt Mod1
+set $altR 108
 set $return 36
 set $space 65
 set $pgDown 117
 set $pgUp 112
+set $tab 23
 set $a 38
+set $b 56
+set $d 40
 set $f 41
 set $g 42
 set $h 43
 set $i 31
+set $j 44
+set $k 45
+set $l 46
 set $o 32
 set $r 27
+set $s 39
 set $p 33
 set $c 54
 set $k 45
 set $x 53
 set $v 55
 set $q 24
+set $w 25
+set $t 28
 set $z 52
 set $e 26
 set $backslash 51
 set $F5 71
 set $F7 73
 set $F8 74
+set $F9 75
+set $F10 76
+set $F11 95
+set $F12 96
 
 
 set $left 113
@@ -104,27 +151,82 @@ set $right 114
 set $up 111
 
 # Main
-bindcode $mod+$return exec --no-startup-id urxvt
+
+# Shortcuts
+# bindcode $mod+$return exec --no-startup-id urxvt
+# bindcode $mod+$return exec --no-startup-id xst
+bindcode $mod+$return exec --no-startup-id st
+# bindcode $mod+$return exec --no-startup-id kitty
+# bindcode $mod+$return exec --no-startup-id konsole
+bindcode $mod+Shift+$return exec --no-startup-id wezterm
 bindcode $mod+Shift+$c reload
 bindcode $mod+Shift+$r restart
 bindcode $mod+$pgUp   workspace prev
 bindcode $mod+$pgDown workspace next
 
+# Scratchpad
+bindcode $mod+Shift+51 move scratchpad
+bindcode $mod+51 scratchpad show
+
+# Stop / Kill applications
 bindcode $mod+$q kill
 bindcode --release $mod+Shift+$q exec xkill
 
+# dmenu "apps"
+#bindcode $mod+$x exec --no-startup-id dmenu_run  -nb "$barBackground" -nf "$barInActiveText" -sb "$barFocusBackground" -sf "$barText" -fn Tamsyn-9 -h 50 -w 1000 -x $xPos -y $yPos -o 0.8
 bindcode $mod+$x exec --no-startup-id "barBackground=$barBackground barInActiveText=$barInActiveText barFocusBackground=$barFocusBackground barText=$barText ~/.config/i3/scripts/starter"
+bindcode $mod+$alt+$x exec --no-startup-id "barBackground=$barBackground barInActiveText=$barInActiveText barFocusBackground=$barFocusBackground barText=$barText ~/.config/i3/scripts/coder"
 bindcode $mod+Shift+$e exec --no-startup-id ~/.config/i3/scripts/shutdown
+bindcode $mod+Shift+$s exec --no-startup-id "barBackground=$barBackground barInActiveText=$barInActiveText barFocusBackground=$barFocusBackground barText=$barText ~/.config/i3/scripts/slack-state"
 bindcode $mod+Shift+$v exec --no-startup-id ~/.config/i3/scripts/vpn
 
 # Apps
-bindcode $mod+$alt+$g exec --no-startup-id kcolorchooser
-bindcode $mod+$alt+$p exec --no-startup-id gpmdp
-bindcode $mod+$alt+$c exec --no-startup-id xcalc
+#bindcode $mod+$alt+$g exec --no-startup-id kcolorchooser
+bindcode $mod+$alt+$g exec --no-startup-id ~/.config/i3/scripts/color-picker
+# bindcode $mod+$alt+$p exec --no-startup-id youtube-music
+bindcode $mod+$alt+$p exec --no-startup-id ytmdesktop
+#bindcode $mod+$alt+$c exec --no-startup-id xcalc
+bindcode $mod+$alt+$c exec --no-startup-id galculator
 bindcode $mod+$alt+$k exec --no-startup-id kwrite
-bindcode $mod+$alt+$backslash exec --no-startup-id /opt/Enpass/bin/runenpass.sh
+# bindcode $mod+$alt+$backslash exec --no-startup-id /usr/bin/enpass
+#bindcode $mod+$alt+$backslash exec --no-startup-id /opt/Enpass/bin/runenpass.sh
 
+# Snapper
+bindsym $mod+Escape exec --no-startup-id "~/bin/snapper clipboard"
+bindsym $mod+Shift+Escape exec --no-startup-id "~/bin/snapper url"
+bindsym $mod+Ctrl+Escape exec --no-startup-id "~/bin/snapper paint"
+
+# Locker
+# bindsym $mod+l exec --no-startup-id "~/.config/i3/scripts/lock"
+
+# Volume things
+bindcode $mod+$F5 exec --no-startup-id "pulseaudio-ctl mute && pkill -RTMIN+1 i3blocks"
+bindcode $mod+$F7 exec --no-startup-id "pulseaudio-ctl down && pkill -RTMIN+1 i3blocks"
+bindcode $mod+$F8 exec --no-startup-id "pulseaudio-ctl up && pkill -RTMIN+1 i3blocks"
+bindcode $mod+Shift+$F7 exec --no-startup-id "pulseaudio-ctl down 20 && pkill -RTMIN+1 i3blocks"
+bindcode $mod+Shift+$F8 exec --no-startup-id "pulseaudio-ctl up 20 && pkill -RTMIN+1 i3blocks"
+
+# YTMP control
+bindcode $mod+$F9 exec --no-startup-id "~/.config/i3blocks/scripts/music pause"
+
+# Camera control
+bindcode $mod+$F11 exec --no-startup-id "~/bin/camera-toggle && pkill -RTMIN+3 i3blocks"
+
+# Light controll
+bindcode $mod+$F12 exec --no-startup-id "~/bin/verisure-light toggle"
+
+# Dunst - Desktop Notificaion
+bindcode $alt+49 exec --no-startup-id "dunstctl close"
+bindcode $mod+49 exec --no-startup-id "dunstctl history-pop"
+
+# WINDOW CONTROL
+#
 # Move cursor focus
+bindcode $mod+$h  focus left
+bindcode $mod+$j  focus down
+bindcode $mod+$k  focus up
+bindcode $mod+$l  focus right
+
 bindcode $mod+$left   focus left
 bindcode $mod+$down   focus down
 bindcode $mod+$up     focus up
@@ -137,19 +239,22 @@ bindcode $mod+Shift+$up     move up
 bindcode $mod+Shift+$right  move right
 
 # Split
-bindcode $mod+$h          split h
+# bindcode $mod+$h          split h
 bindcode $mod+$alt+$right split h
-bindcode $mod+$v          split v
+# bindcode $mod+$v          split v
 bindcode $mod+$alt+$down  split v
 
 # Fullscreen
 bindcode $mod+$f fullscreen
 
-# Change container layout (stacked (mod+s), tabbed (mod+t), default(mod+e))
-bindcode $mod+39 layout stacking
-bindcode $mod+28 layout tabbed
-bindcode $mod+40 layout default
-bindcode $mod+25 layout toggle split
+# Toggle i3-bar
+bindcode $mod+$b bar mode toggle
+
+# Change container layout (stacked (mod+s), tabbed (mod+t), default(mod+d), toggle split (mod+w))
+bindcode $mod+$s layout stacking
+bindcode $mod+$t layout tabbed
+bindcode $mod+$d layout default
+bindcode $mod+$w layout toggle split
 
 # Toggle tiling / floating
 bindcode $mod+Shift+$space floating toggle
@@ -164,24 +269,16 @@ bindcode $mod+$a focus parent
 # focus the child container (mod+z)
 bindcode $mod+$z focus child
 
-# Snapper
-bindsym $mod+Escape exec --no-startup-id "~/bin/snapper clipboard"
-bindsym $mod+Shift+Escape exec --no-startup-id "~/bin/snapper url"
-bindsym $mod+Ctrl+Escape exec --no-startup-id "~/bin/snapper paint"
-
-# Locker
-bindsym $mod+l exec --no-startup-id "~/.config/i3/scripts/lock"
-
-# Volume things
-bindcode $mod+$F5 exec --no-startup-id "pulseaudio-ctl mute"
-bindcode $mod+$F7 exec --no-startup-id "pulseaudio-ctl down"
-bindcode $mod+$F8 exec --no-startup-id "pulseaudio-ctl up"
-bindcode $mod+Shift+$F7 exec --no-startup-id "pulseaudio-ctl down 20"
-bindcode $mod+Shift+$F8 exec --no-startup-id "pulseaudio-ctl up 20"
-
+# Chrome Apps
+set $chromeKeep hcfcmgpnmpinpidjdgejehjchlbglpde
+# set $chromeGmail fmgjjmmmlfnkbppncabfkddbjimcfncm
 
 # Workspaces
 # ----------
+
+# create a alt+tab feeiling
+bindcode $alt+$tab workspace back_and_forth
+
 set $ws1    "1 "
 set $ws2    "2 "
 set $ws3    "3 "
@@ -191,9 +288,11 @@ set $ws6    "6 "
 set $ws7    "7 "
 set $ws8    "8 "
 set $ws9    "9 "
-set $ws10   "10  "
+set $ws10   "  "
 set $wsm    "  "
-set $wsmm   "  " 
+set $wsn    "  "
+set $wsmm   "  "
+
 set $wsn1   "11 "
 set $wsn2   "12 "
 set $wsn3   "13 "
@@ -203,7 +302,71 @@ set $wsn6   "16 "
 set $wsn7   "17 "
 set $wsn8   "18 "
 set $wsn9   "19 "
-set $wsn10  "20 "
+set $wsn10  "10 "
+
+# set $wsn21  "21 "
+# set $wsn22  "22 "
+# set $wsn23  "23 "
+# set $wsn24  "24 "
+# set $wsn25  "25 "
+# set $wsn26  "26 "
+# set $wsn27  "27 "
+# set $wsn28  "28 "
+# set $wsn29  "29 "
+# set $wsn20  "20 "
+
+# Lock workspaces to monitors
+set $monitor_one HDMI-1
+set $monitor_two HDMI-0
+set $monitor_three DVI-D-0
+
+workspace $ws1 output $monitor_one
+workspace $ws2 output $monitor_one
+workspace $ws3 output $monitor_one
+workspace $ws4 output $monitor_one
+workspace $ws5 output $monitor_one
+workspace $ws6 output $monitor_one
+workspace $ws7 output $monitor_one
+workspace $ws8 output $monitor_one
+workspace $ws9 output $monitor_one
+workspace $ws10 output $monitor_one
+workspace $wsm output $monitor_one
+workspace $wsn output $monitor_one
+workspace $wsmm output $monitor_one
+
+workspace $wsn1 output $monitor_two
+workspace $wsn2 output $monitor_two
+workspace $wsn3 output $monitor_two
+workspace $wsn4 output $monitor_two
+workspace $wsn5 output $monitor_two
+workspace $wsn6 output $monitor_two
+workspace $wsn7 output $monitor_two
+workspace $wsn8 output $monitor_two
+workspace $wsn9 output $monitor_two
+workspace $wsn10 output $monitor_two
+
+# workspace $wsn21 output $monitor_three
+# workspace $wsn22 output $monitor_three
+# workspace $wsn23 output $monitor_three
+# workspace $wsn24 output $monitor_three
+# workspace $wsn25 output $monitor_three
+# workspace $wsn26 output $monitor_three
+# workspace $wsn27 output $monitor_three
+# workspace $wsn28 output $monitor_three
+# workspace $wsn29 output $monitor_three
+# workspace $wsn20 output $monitor_three
+
+# Override gaps
+ # workspace $wsn21 gaps inner 0 gaps outer 0
+# workspace $wsn22 gaps inner 0 gaps outer 0
+# workspace $wsn23 gaps inner 0 gaps outer 0
+# workspace $wsn24 gaps inner 0 gaps outer 0
+# workspace $wsn25 gaps inner 0 gaps outer 0
+# workspace $wsn26 gaps inner 0 gaps outer 0
+# workspace $wsn27 gaps inner 0 gaps outer 0
+# workspace $wsn28 gaps inner 0 gaps outer 0
+# workspace $wsn29 gaps inner 0 gaps outer 0
+# workspace $wsn20 gaps inner 0 gaps outer 0
 
 # Switch between workspaces
 bindcode $mod+10 workspace $ws1
@@ -217,18 +380,54 @@ bindcode $mod+17 workspace $ws8
 bindcode $mod+18 workspace $ws9
 bindcode $mod+19 workspace $ws10
 bindcode $mod+58 workspace $wsm
+bindcode $mod+57 workspace $wsn
 bindcode $mod+33 workspace $wsmm
 
-bindcode $mod+Ctrl+10 workspace $wsn1
-bindcode $mod+Ctrl+11 workspace $wsn2
-bindcode $mod+Ctrl+12 workspace $wsn3
-bindcode $mod+Ctrl+13 workspace $wsn4
-bindcode $mod+Ctrl+14 workspace $wsn5
-bindcode $mod+Ctrl+15 workspace $wsn6
-bindcode $mod+Ctrl+16 workspace $wsn7
-bindcode $mod+Ctrl+17 workspace $wsn8
-bindcode $mod+Ctrl+18 workspace $wsn9
-bindcode $mod+Ctrl+19 workspace $wsn10
+# bindcode $mod+Ctrl+10 workspace $wsn1
+# bindcode $mod+Ctrl+11 workspace $wsn2
+# bindcode $mod+Ctrl+12 workspace $wsn3
+# bindcode $mod+Ctrl+13 workspace $wsn4
+# bindcode $mod+Ctrl+14 workspace $wsn5
+# bindcode $mod+Ctrl+15 workspace $wsn6
+# bindcode $mod+Ctrl+16 workspace $wsn7
+# bindcode $mod+Ctrl+17 workspace $wsn8
+# bindcode $mod+Ctrl+18 workspace $wsn9
+# bindcode $mod+Ctrl+19 workspace $wsn10
+#
+# bindcode $mod+mod2+87 workspace $wsn21
+# bindcode $mod+mod2+88 workspace $wsn22
+# bindcode $mod+mod2+89 workspace $wsn23
+# bindcode $mod+mod2+83 workspace $wsn24
+# bindcode $mod+mod2+84 workspace $wsn25
+# bindcode $mod+mod2+85 workspace $wsn26
+# bindcode $mod+mod2+79 workspace $wsn27
+# bindcode $mod+mod2+80 workspace $wsn28
+# bindcode $mod+mod2+81 workspace $wsn29
+# bindcode $mod+mod2+90 workspace $wsn20
+
+# USE THIS WITH FULL KEYBOARD
+# bindcode $mod+mod2+87 workspace $wsn1
+# bindcode $mod+mod2+88 workspace $wsn2
+# bindcode $mod+mod2+89 workspace $wsn3
+# bindcode $mod+mod2+83 workspace $wsn4
+# bindcode $mod+mod2+84 workspace $wsn5
+# bindcode $mod+mod2+85 workspace $wsn6
+# bindcode $mod+mod2+79 workspace $wsn7
+# bindcode $mod+mod2+80 workspace $wsn8
+# bindcode $mod+mod2+81 workspace $wsn9
+# bindcode $mod+mod2+90 workspace $wsn10
+
+# USE THIS WITH 75% KEYBOARD
+bindcode $alt+10 workspace $wsn1
+bindcode $alt+11 workspace $wsn2
+bindcode $alt+12 workspace $wsn3
+bindcode $alt+13 workspace $wsn4
+bindcode $alt+14 workspace $wsn5
+bindcode $alt+15 workspace $wsn6
+bindcode $alt+16 workspace $wsn7
+bindcode $alt+17 workspace $wsn8
+bindcode $alt+18 workspace $wsn9
+bindcode $alt+19 workspace $wsn10
 
 # Move focused container to workspace
 bindcode $mod+Shift+10 move container to workspace $ws1
@@ -242,31 +441,73 @@ bindcode $mod+Shift+17 move container to workspace $ws8
 bindcode $mod+Shift+18 move container to workspace $ws9
 bindcode $mod+Shift+19 move container to workspace $ws10
 bindcode $mod+Shift+58 move container to workspace $wsm
+bindcode $mod+Shift+57 move container to workspace $wsn
 bindcode $mod+Shift+33 move container to workspace $wsmm
 
-bindcode $mod+Shift+Ctrl+10 move container to workspace $wsn1
-bindcode $mod+Shift+Ctrl+11 move container to workspace $wsn2
-bindcode $mod+Shift+Ctrl+12 move container to workspace $wsn3
-bindcode $mod+Shift+Ctrl+13 move container to workspace $wsn4
-bindcode $mod+Shift+Ctrl+14 move container to workspace $wsn5
-bindcode $mod+Shift+Ctrl+15 move container to workspace $wsn6
-bindcode $mod+Shift+Ctrl+16 move container to workspace $wsn7
-bindcode $mod+Shift+Ctrl+17 move container to workspace $wsn8
-bindcode $mod+Shift+Ctrl+18 move container to workspace $wsn9
-bindcode $mod+Shift+Ctrl+19 move container to workspace $wsn10
+# bindcode $mod+Shift+Ctrl+10 move container to workspace $wsn1
+# bindcode $mod+Shift+Ctrl+11 move container to workspace $wsn2
+# bindcode $mod+Shift+Ctrl+12 move container to workspace $wsn3
+# bindcode $mod+Shift+Ctrl+13 move container to workspace $wsn4
+# bindcode $mod+Shift+Ctrl+14 move container to workspace $wsn5
+# bindcode $mod+Shift+Ctrl+15 move container to workspace $wsn6
+# bindcode $mod+Shift+Ctrl+16 move container to workspace $wsn7
+# bindcode $mod+Shift+Ctrl+17 move container to workspace $wsn8
+# bindcode $mod+Shift+Ctrl+18 move container to workspace $wsn9
+# bindcode $mod+Shift+Ctrl+19 move container to workspace $wsn10
+#
+# bindcode $mod+Shift+mod2+87 move container to workspace $wsn21
+# bindcode $mod+Shift+mod2+88 move container to workspace $wsn22
+# bindcode $mod+Shift+mod2+89 move container to workspace $wsn23
+# bindcode $mod+Shift+mod2+83 move container to workspace $wsn24
+# bindcode $mod+Shift+mod2+84 move container to workspace $wsn25
+# bindcode $mod+Shift+mod2+85 move container to workspace $wsn26
+# bindcode $mod+Shift+mod2+79 move container to workspace $wsn27
+# bindcode $mod+Shift+mod2+80 move container to workspace $wsn28
+# bindcode $mod+Shift+mod2+81 move container to workspace $wsn29
+# bindcode $mod+Shift+mod2+90 move container to workspace $wsn20
+
+# USE WITH FULL KEYBOARD
+# bindcode $mod+Shift+mod2+87 move container to workspace $wsn1
+# bindcode $mod+Shift+mod2+88 move container to workspace $wsn2
+# bindcode $mod+Shift+mod2+89 move container to workspace $wsn3
+# bindcode $mod+Shift+mod2+83 move container to workspace $wsn4
+# bindcode $mod+Shift+mod2+84 move container to workspace $wsn5
+# bindcode $mod+Shift+mod2+85 move container to workspace $wsn6
+# bindcode $mod+Shift+mod2+79 move container to workspace $wsn7
+# bindcode $mod+Shift+mod2+80 move container to workspace $wsn8
+# bindcode $mod+Shift+mod2+81 move container to workspace $wsn9
+# bindcode $mod+Shift+mod2+90 move container to workspace $wsn10
+
+# WITH 75% KEYBOARD
+bindcode $alt+Shift+10 move container to workspace $wsn1
+bindcode $alt+Shift+11 move container to workspace $wsn2
+bindcode $alt+Shift+12 move container to workspace $wsn3
+bindcode $alt+Shift+13 move container to workspace $wsn4
+bindcode $alt+Shift+14 move container to workspace $wsn5
+bindcode $alt+Shift+15 move container to workspace $wsn6
+bindcode $alt+Shift+16 move container to workspace $wsn7
+bindcode $alt+Shift+17 move container to workspace $wsn8
+bindcode $alt+Shift+18 move container to workspace $wsn9
+bindcode $alt+Shift+19 move container to workspace $wsn10
 
 
 # Assign application to workspace
 # -------------------------------
-assign [class="(?i)messenger"] $ws10
+assign [class="(?i)caprine"] $ws10
 assign [class="wmail"] $wsm
+assign [class="Station"] $wsm
+assign [class="Rambox"] $wsm
+assign [class="Ferdi"] $wsm
+assign [class="Google-chrome" instance=$chromeKeep] $wsn
 assign [class="(?i)Google Play Music Desktop Player"] $wsmm
+assign [class="(?i)youtube-music-desktop-app"] $wsmm
 
 
 # Layout for matching applications
 # --------------------------------
 for_window [class="(?i)feh"] floating enable
 for_window [class="(?i)xcalc"] floating enable
+for_window [class="(?i)galculator"] floating enable
 for_window [class="(?i)display"] floating enable
 for_window [title="(?i)STOPWATCH"] floating enable
 for_window [title="(?i)kolourpaint"] floating enable
@@ -284,6 +525,12 @@ for_window [instance="(?i)kruler"] floating enable
 for_window [title="(?i)^xzoom"] floating enable
 for_window [title="(?i)^Slack call"] floating enable
 for_window [instance="(?i)yad"] border none floating enable
+for_window [class="(?i)enpass"] floating enable
+# for_window [title="(?i)Enpass"] move scratchpad
+for_window [class="(?i)mousepad"] border pixel $borders
+for_window [class="(?i)code"] border pixel $borders
+for_window [class="(?i)TelegramDesktop"] border pixel $borders
+
 
 
 # Resize container
@@ -306,26 +553,69 @@ bindcode $mod+$r mode "resize"
 # Bar
 # ---
 bar {
-  status_command i3blocks -c ~/.config/i3blocks/config-$(hostname)
+  id main
+  status_command i3blocks -c ~/.config/i3blocks/config
   i3bar_command i3bar
   position top
   height 24
-  font pango:Hack, FontAwesome 8
+  output $monitor_one
+  output $monitor_two
+  # font FontAwesome 8
+  # font pango:FontAwesome 10
+  # font pango:JetBrainsMono Nerd Font Mono 10
+  font pango:Hack, FontAwesome 10
+  # font pango:FontAwesome 10, Hack 10
+  # font FontAwesome 8
+  #font pango:Hack, FontAwesome 8, FontAwesome5Free 8, FontAwesome5Free:style=Solid 8
+  #font pango:Hack, FontAwesome5Free:style=Solid 8
   strip_workspace_numbers no
   tray_padding 2
+  tray_output HDMI-1
   separator_symbol " " 
 
   colors {
-    background $barBackground
-    focused_workspace   $barInActiveBackground  $barFocusBackground     $barText
-    #focused_workspace   $barBorderActive        $barFocusBackground     $barText
-    active_workspace    $barBackground  $barBackground    $barText
-    #active_workspace    $barInActiveBackground  $barActiveBackground    $barText
-    inactive_workspace  $barBackground  $barBackground  $barInActiveText
-    #inactive_workspace  $barInActiveBackground  $barInActiveBackground  $barInActiveText
-    urgent_workspace    $lightred               $barFocusBackground     $barText
+    background $base00
+    separator  $base01
+    statusline $base04
+
+    # State             Border  BG      Text
+    focused_workspace   $base05 $base0D $base00
+    active_workspace    $base05 $base03 $base00
+    inactive_workspace  $base03 $base01 $base05
+    urgent_workspace    $base08 $base08 $base00
+    binding_mode        $base00 $base0A $base00
+
+    # background $barBackground
+    # focused_workspace   $barInActiveBackground  $barFocusBackground     $barText
+    # active_workspace    $barBackground  $barBackground    $barText
+    # inactive_workspace  $barBackground  $barBackground  $barInActiveText
+    # urgent_workspace    $lightred               $barFocusBackground     $barText
+    # #focused_workspace   $barBorderActive        $barFocusBackground     $barText
+    # #active_workspace    $barInActiveBackground  $barActiveBackground    $barText
+    # #inactive_workspace  $barInActiveBackground  $barInActiveBackground  $barInActiveText
   }
 }
+
+# bar {
+#   id third
+#   status_command i3blocks -c ~/.config/i3blocks/config-rotated
+#   i3bar_command i3bar
+#   position top
+#   height 24
+#   output $monitor_three
+#   font pango:Hack, FontAwesome 7
+#   strip_workspace_numbers no
+#   tray_output none
+#   separator_symbol " " 
+#
+#   colors {
+#     background $barBackground
+#     focused_workspace   $barInActiveBackground  $barFocusBackground     $barText
+#     active_workspace    $barBackground  $barBackground    $barText
+#     inactive_workspace  $barBackground  $barBackground  $barInActiveText
+#     urgent_workspace    $lightred               $barFocusBackground     $barText
+#   }
+# }
 
 
 # Gaps controller (mod + shift + g)
@@ -369,44 +659,12 @@ mode "$mode_gaps_outer" {
   bindsym Escape mode "default"
 }
 
+
 #workspace $ws1 gaps inner 0
 #workspace $ws2 gaps inner 0
 #workspace $ws10 gaps inner 0
 #workspace $wsm gaps inner 0
 #workspace $wsmm gaps inner 0
-
-
-# Monitor shortcut
-# ----------------
-set $mode_monitor Type: (n) normal, (c) clone
-set $mode_monitor_normal Normal: (a) auto, (2) auto2, (l) laptop, (h) hdmi, (v) vga
-set $mode_monitor_clone Clone: (h) hdmi, (v) vga
-bindsym $mod+Shift+d mode "$mode_monitor"
-
-mode "$mode_monitor" {
-  bindsym n      mode "$mode_monitor_normal"
-  bindsym c      mode "$mode_monitor_clone"
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-}
-
-mode "$mode_monitor_normal" {
-  bindsym a      exec --no-startup-id ~/bin/monitor normal auto; mode "default"
-  bindsym 2      exec --no-startup-id ~/bin/monitor normal auto2; mode "default"
-  bindsym l      exec --no-startup-id ~/bin/monitor normal laptop; mode "default"
-  bindsym h      exec --no-startup-id ~/bin/monitor normal hdmi; mode "default"
-  bindsym v      exec --no-startup-id ~/bin/monitor normal vga; mode "default"
-  bindsym Return mode "default"
-bindsym Escape mode "default"
-}
-
-mode "$mode_monitor_clone" {
-  bindsym h      exec --no-startup-id ~/bin/monitor clone hdmi; mode "default"
-  bindsym v      exec --no-startup-id ~/bin/monitor clone vga; mode "default"
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-}
-
 
 # Autostart
 # ---------
@@ -415,17 +673,28 @@ mode "$mode_monitor_clone" {
 exec --no-startup-id setxkbmap -model pc105 -layout us,no -option grp:sclk_toggle
 exec --no-startup-id "numlockx &"
 #exec --no-startup-id compton &
-#exec --no-startup-id redshift-gtk &
+#exec --no-startup-id picom -b
+exec --no-startup-id redshift-gtk -l 59.91:10.75 &
 #exec --no-startup-id "~/bin/pullover/pullover &"
 exec --no-startup-id "nm-applet &"
 exec --no-startup-id xautolock -time 15 -locker "~/.config/i3/scripts/lock"
 
 # Apps
 exec --no-startup-id "/usr/bin/rescuetime &"
-exec --no-startup-id "/opt/openwmail/openWMail &"
-exec --no-startup-id "messengerfordesktop &"
-exec --no-startup-id "/opt/Enpass/bin/runenpass.sh &"
+#exec --no-startup-id "/opt/openwmail/openWMail &"
+#exec --no-startup-id "/usr/bin/station &"
+exec --no-startup-id "/usr/bin/ferdi &"
+exec --no-startup-id "caprine &"
+exec --no-startup-id "/usr/bin/enpass &"
+#exec --no-startup-id "/opt/Enpass/bin/runenpass.sh &"
 exec --no-startup-id "~/.fehbg &"
+#exec --no-startup-id "xcompmgr -c &"
 exec --no-startup-id "/usr/bin/gnome-pomodoro --no-default-window &"
 exec --no-startup-id "/usr/bin/i3-gnome-pomodoro daemon &"
 #exec --no-startup-id "compton --config ~/.config/compton.conf &"
+exec --no-startup-id "/usr/bin/blueman-applet &"
+exec --no-startup-id "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=$chromeKeep"
+#exec --no-startup-id "/usr/bin/gkrellm &"
+#exec --no-startup-id "/home/glarsen/Projects/Privat/tibber-feed/current-power.sh"
+
+

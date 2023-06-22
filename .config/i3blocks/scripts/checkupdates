@@ -1,15 +1,42 @@
 #!/usr/bin/env bash
 
+CHECKUPDATES_DB="${TMPDIR:-/tmp}/checkup-db-$(id -u)/"
+
+#IGNORE="linux linux-headers nvidia nvidia-settings nvidia-utils"
+IGNORE=""
+
+IGNORE_GREP="______"
+for package in $IGNORE; do
+    IGNORE_STRING="${IGNORE_STRING} --ignore=$package"
+    IGNORE_GREP="${IGNORE_GREP}|$package"
+done
+
 if [ "$1" == "update" ]; then
-    yaourt -Syua --noconfirm
+    # pacaur -Syu
+    # yaourt -Syua --noconfirm
+    #yaourt -Syua --noconfirm --ignore=linux --ignore=linux-headers --ignore=nvidia --ignore=nvidia-settings --ignore=nvidia-utils
+    PACKAGE=$(cat $2)
+    if [ "$PACKAGE" == "All" ]; then
+      yay -Syu --noconfirm ${IGNORE_STRING}
+    else
+      yay -Syu --noconfirm ${IGNORE_STRING} ${PACKAGE}
+    fi
+    pkill -RTMIN+2 i3blocks
     echo Press any key to close
     read
     exit 0
 fi
 
 if [ "$BLOCK_BUTTON" == "1" ]; then
-    notify-send "package updater" "updating packages"
-    urxvt -title "PACMAN+AUR UPDATE" -e $0 update &
+    PACKAGE=$((echo All; yay -Qu ${IGNORE_STRING} --dbpath ${CHECKUPDATES_DB} | grep -Ev "${IGNORE_GREP}" | awk '{print $1}') | dmenu -nb "#222222" -nf "#d88568" -sb "#d88568" -sf "#eff1f5" -fn "Tamsyn-9" -h 50 -w 200 -x 1820 -y 755 -o 0.8 -l 10 -i)
+
+    if [ "${PACKAGE}" != "" ]; then
+      # notify-send "package updater" "updating packages"
+      tmpfile=$(mktemp /tmp/pakage-to-update.XXXXXX)
+      echo $PACKAGE > $tmpfile
+      urxvt -title "PACMAN+AUR UPDATE" -e $0 update $tmpfile &
+    fi
+
     return;
 fi
 
@@ -17,10 +44,18 @@ fi
 # Trigger the script thats doing the magic of not running an update as root, instead of "yaourt -Syya"
 checkupdates &> /dev/null
 
-CHECKUPDATES_DB="${TMPDIR:-/tmp}/checkup-db-${USER}/"
-UPDATES=$(yaourt -Qua --dbpath ${CHECKUPDATES_DB} | wc -l)
+ALL=$(yay -Qu ${IGNORE_STRING} --dbpath ${CHECKUPDATES_DB} | grep -Ev "${IGNORE_GREP}" | wc -l)
 
-[[ "${UPDATES}" = "0" ]] && exit 0
+[[ "${ALL}" = "0" ]] && exit 0
 
-echo "   ${UPDATES} "
+AUR=$(yay -Qua ${IGNORE_STRING} --dbpath ${CHECKUPDATES_DB} | grep -Ev "${IGNORE_GREP}" | wc -l)
+PKG=$[ $ALL - $AUR ]
+
+if [ "$AUR" != "0" ]; then
+    echo "   ${PKG} + ${AUR} "
+else
+    echo "   ${PKG} "
+fi
+
+
 exit 33

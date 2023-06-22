@@ -1,2 +1,13 @@
 #!/bin/bash
+OTHER=""
+#OTHER="America/Chicago"
+#OTHER="Europe/Vilnius"
+
+if [ "${OTHER}" != "" ]; then
+  echo -n "<b>`TZ=${OTHER} date +'%T'`</b>"
+  echo -n " - Home: "
+fi
+
+# echo "<b>$(date +'%a %d %b %T')  </b>"
+
 echo "<b>`date +'%T'`</b>  "

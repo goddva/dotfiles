@@ -1,6 +1,13 @@
+#weather() {
+#    curl -s "http://www.yr.no/sted/Norway/Oslo/Oslo/Oslo/external_box_stripe.js" | perl -ne 's/&deg;/°/g; s/\\n//g; undef $/;/tid.*?'"'"'.*?'"'"'[ ]+(.*?)'"'"'.*?<\/p>/sx && printf "OSLO: %s",$1,"\n\n"';
+#    echo "";
+#}
+#
+# http://www.yr.no/sted/Norge/Akershus/L%C3%B8renskog/Rasta/external_box_stripe.js
+
 weather() {
-    curl -s "http://www.yr.no/sted/Norway/Oslo/Oslo/Oslo/external_box_stripe.js" | perl -ne 's/&deg;/°/g; s/\\n//g; undef $/;/tid.*?'"'"'.*?'"'"'[ ]+(.*?)'"'"'.*?<\/p>/sx && printf "OSLO: %s",$1,"\n\n"';
-    echo "";
+  CITY=${*:-Røykås}
+  curl -s "https://wttr.in/${CITY// /%20}" | grep -v "@igor_chubin"
+  curl -s "https://v2.wttr.in/${CITY// /%20}" | grep -v "@igor_chubin"
 }
 
-# http://www.yr.no/sted/Norge/Akershus/L%C3%B8renskog/Rasta/external_box_stripe.js

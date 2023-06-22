@@ -1,5 +1,30 @@
 #!/bin/bash
-select=$(echo -e 'CANCEL\nREBOOT\nSHUTDOWN\nSUSPEND\nLOGOUT' | dmenu  -nb "#CED0D1" -nf "#3C3437" -fn Tamsyn -h 50 -w 780 -x 890 -y 600 -i -p "What kind of exit: ")
+
+SCREEN_SIZE=$(/home/glarsen/.config/i3/scripts/active-monitor | sed 's/ /x/')
+#SCREEN_SIZE=$(xrandr | awk '/*/ {print $1}' | head -1)
+
+X_SIZE=780
+Y_SIZE=50
+
+X_POS=$[$(echo "${SCREEN_SIZE}" | cut -d 'x' -f1) / 2 - (${X_SIZE} / 2)]
+Y_POS=$[$(echo "${SCREEN_SIZE}" | cut -d 'x' -f2) / 2 - (${Y_SIZE} / 2)]
+
+if [ "${X_POS}" == "" ]; then
+    X_POS=500
+    Y_POS=460
+fi
+
+# Make sure we have needed variables
+barText="${barText:-#eff1f5}"
+barInActiveText="${barInActiveText:-#a7adba}"
+barBackground="${barBackground:-#343d46}"
+barFocusBackground="${barFocusBackground:-#65737e}"
+barActiveBackground="${barActiveBackground:-#5f676a}"
+barInActiveBackground="${barInActiveBackground:-#4f5b66}"
+barSelectedBackground="${barSelectedBackground:-#343d46}"
+barBorderActive="${barBorderActive:-#a3be8c}"
+
+select=$(echo -e 'CANCEL\nREBOOT\nSHUTDOWN\nSUSPEND\nLOGOUT' | dmenu -nb "$barBackground" -nf "$barInActiveText" -sb "$barFocusBackground" -sf "$barText" -fn Tamsyn -h $Y_SIZE -w $X_SIZE -x $X_POS -y $Y_POS -i -p "What kind of exit: ")
 
 case "$select" in
     CANCEL)

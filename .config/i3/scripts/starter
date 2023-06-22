@@ -1,9 +1,20 @@
 #!/bin/bash
 
-SCREEN_SIZE=$(xrandr | awk '/*/ {print $1}' | head -1)
+# SCREEN_SIZE=$(/home/glarsen/.config/i3/scripts/active-monitor | sed 's/ /x/')
+#SCREEN_SIZE=$(xrandr | awk '/*/ {print $1}' | head -1)
+SCREEN_SIZE="3840x2160"
 
-X_POS=$[$(echo "${SCREEN_SIZE}" | cut -d 'x' -f1) / 2 - 500]
-Y_POS=$[$(echo "${SCREEN_SIZE}" | cut -d 'x' -f2) / 2 - 25]
+if [ "$(echo "${SCREEN_SIZE}" | cut -d 'x' -f1)" == "1200" ]; then
+  X_SIZE=1100
+  Y_SIZE=50
+else
+  X_SIZE=1500
+  Y_SIZE=50
+fi
+
+
+X_POS=$[$(echo "${SCREEN_SIZE}" | cut -d 'x' -f1) / 2 - (${X_SIZE} / 2)]
+Y_POS=$[$(echo "${SCREEN_SIZE}" | cut -d 'x' -f2) / 2 - (${Y_SIZE} / 2)]
 
 if [ "${X_POS}" == "" ]; then
     X_POS=500
@@ -20,15 +31,27 @@ barInActiveBackground="${barInActiveBackground:-#4f5b66}"
 barSelectedBackground="${barSelectedBackground:-#343d46}"
 barBorderActive="${barBorderActive:-#a3be8c}"
 
+# dmenu_run \
+#   -nb "$barBackground" \
+#   -nf "$barInActiveText" \
+#   -sb "$barFocusBackground" \
+#   -sf "$barText" \
+#   -fn Tamsyn-9 \
+#   -h $Y_SIZE \
+#   -W $X_SIZE \
+#   -X $X_POS \
+#   -Y $Y_POS \
+#   -o 0.8
+
 dmenu_run \
   -nb "$barBackground" \
   -nf "$barInActiveText" \
   -sb "$barFocusBackground" \
   -sf "$barText" \
   -fn Tamsyn-9 \
-  -h 50 \
-  -w 1000 \
+  -h $Y_SIZE \
+  -w $X_SIZE \
   -x $X_POS \
   -y $Y_POS \
-  -o 0.8
+  -o 0.99
 
