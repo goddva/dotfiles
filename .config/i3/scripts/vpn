@@ -2,39 +2,50 @@
 
 SCREEN_SIZE=$(xrandr | awk '/*/ {print $1}' | head -1)
 
-X_POS=$[$(echo "${SCREEN_SIZE}" | cut -d 'x' -f1) / 2 - 495]
-Y_POS=$[$(echo "${SCREEN_SIZE}" | cut -d 'x' -f2) / 2 - 160]
+X_POS=$(($(echo "${SCREEN_SIZE}" | cut -d 'x' -f1) / 2 - 495))
+Y_POS=$(($(echo "${SCREEN_SIZE}" | cut -d 'x' -f2) / 2 - 160))
 
 if [ "${X_POS}" == "" ]; then
-    X_POS=670
-    Y_POS=500
+	X_POS=670
+	Y_POS=500
 fi
 
+# Make sure we have needed variables
+barText="${barText:-#eff1f5}"
+barInActiveText="${barInActiveText:-#a7adba}"
+barBackground="${barBackground:-#343d46}"
+barFocusBackground="${barFocusBackground:-#65737e}"
+barActiveBackground="${barActiveBackground:-#5f676a}"
+barInActiveBackground="${barInActiveBackground:-#4f5b66}"
+barSelectedBackground="${barSelectedBackground:-#343d46}"
+barBorderActive="${barBorderActive:-#a3be8c}"
 
 OPTION=""
 declare -A ACTIONS
 
-OLDIFS=$IFS; IFS=$'\n'; for config in $(/usr/bin/nmcli -f type,uuid,device,name -t connection \
-    | awk -F ":" '/^vpn/ {print $2"|"$3"|"$4}'); do
+OLDIFS=$IFS
+IFS=$'\n'
+for config in $(/usr/bin/nmcli -f type,uuid,device,name -t connection |
+	awk -F ":" '/^vpn/ {print $2"|"$3"|"$4}'); do
 
-    if [ "$OPTION" != "" ]; then OPTION="${OPTION}\n"; fi
-    UUID=$(echo "$config" | cut -d '|' -f1)
-    ACTIVE=$(echo "$config" | cut -d '|' -f2)
-    NAME=$(echo "$config" | cut -d '|' -f3)
+	if [ "$OPTION" != "" ]; then OPTION="${OPTION}\n"; fi
+	UUID=$(echo "$config" | cut -d '|' -f1)
+	ACTIVE=$(echo "$config" | cut -d '|' -f2)
+	NAME=$(echo "$config" | cut -d '|' -f3)
 
-    if [ "$ACTIVE" != "" ]; then
-        OPTION="DISCONNECT ($NAME)\n${OPTION}"
-        ACTIONS["DISCONNECT ($NAME)"]="down $UUID"
-    fi
+	if [ "$ACTIVE" != "" ]; then
+		OPTION="DISCONNECT ($NAME)\n${OPTION}"
+		ACTIONS["DISCONNECT ($NAME)"]="down $UUID"
+	fi
 
-    ACTIONS["$NAME"]="up $UUID"
+	ACTIONS["$NAME"]="up $UUID"
 
-    OPTION="${OPTION}${NAME}"
+	OPTION="${OPTION}${NAME}"
 done
 IFS=$OLDIFS
 
-select=$(echo -e $OPTION | dmenu  -nb "#CED0D1" -nf "#3C3437" -fn Tamsyn-9 -h 40 -w 990 -x $X_POS -y $Y_POS -i -l 8 -p "VPN: ")
+select=$(echo -e $OPTION | dmenu -nb "$barBackground" -nf "$barInActiveText" -sb "$barFocusBackground" -sf "$barText" -fn Tamsyn -h 40 -w 990 -x $X_POS -y $Y_POS -i -l 8 -p "VPN: ")
 
 if [ "${ACTIONS[$select]}" != "" ]; then
-    nmcli connection ${ACTIONS[$select]}
+	nmcli connection ${ACTIONS[$select]}
 fi

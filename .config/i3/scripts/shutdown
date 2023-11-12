@@ -2,8 +2,9 @@
 
 SCREEN_SIZE=$(/home/glarsen/.config/i3/scripts/active-monitor | sed 's/ /x/')
 #SCREEN_SIZE=$(xrandr | awk '/*/ {print $1}' | head -1)
+SCREEN_SIZE="3840x2160"
 
-X_SIZE=780
+X_SIZE=880
 Y_SIZE=50
 
 X_POS=$[$(echo "${SCREEN_SIZE}" | cut -d 'x' -f1) / 2 - (${X_SIZE} / 2)]
@@ -13,6 +14,8 @@ if [ "${X_POS}" == "" ]; then
     X_POS=500
     Y_POS=460
 fi
+
+Y_POS=$(($Y_POS - 200))
 
 # Make sure we have needed variables
 barText="${barText:-#eff1f5}"
