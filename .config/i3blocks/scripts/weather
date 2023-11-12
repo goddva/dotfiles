@@ -1,5 +1,25 @@
 #!/bin/bash
 
+# Vestaveien
+# LAT=59.925424
+# LON=10.929603
+
+# Mamma & Jan
+# LAT=60.447017
+# LON=11.498537
+
+# Hedemarkstoppen
+# LAT=60.819373
+# LON=11.045314
+
+# Sarons dal
+LAT=58.32562
+LON=6.98884
+
+# Royales
+LAT=38.064461
+LON=-0.714022
+
 URGENT_LOWER=-10
 URGENT_HIGHER=25
 
@@ -68,25 +88,26 @@ SYMBOL_STORM=("6" "11" "20" "21" "22" "23" "24" "25" "26" "27" "28" "29" "30" "3
 # 34 HeavySnowThunder
 
 TMP="$(mktemp)"
-curl -s "https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=59.925424&lon=10.929603" > ${TMP}
+curl -s "https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=${LAT}&lon=${LON}" >${TMP}
+#curl -s "https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=59.925424&lon=10.929603" > ${TMP}
 WEATHER_TEMP=$(xmllint --xpath '//weatherdata/product/time/location/temperature/@value' ${TMP} | head -1 | cut -d '"' -f2)
 WEATHER_MAIN=$(xmllint --xpath '//weatherdata/product/time/location/symbol/@number' ${TMP} | head -1 | cut -d '"' -f2)
 BORDER="  "
 
 if [[ " ${SYMBOL_SNOW[@]} " =~ " ${WEATHER_MAIN} " ]]; then
-  echo "${BORDER}${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
+	echo "${BORDER}${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
 elif [[ " ${SYMBOL_RAINY[@]} " =~ " ${WEATHER_MAIN} " ]]; then
-  echo "${BORDER}${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
+	echo "${BORDER}${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
 elif [[ " ${SYMBOL_CLOUDY[@]} " =~ " ${WEATHER_MAIN} " ]]; then
-  echo "${BORDER}${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
+	echo "${BORDER}${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
 elif [[ " ${SYMBOL_SUNNY[@]} " =~ " ${WEATHER_MAIN} " ]]; then
-  echo "${BORDER}${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
+	echo "${BORDER}${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
 elif [[ " ${SYMBOL_FOG[@]} " =~ " ${WEATHER_MAIN} " ]]; then
-  echo "${BORDER}${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
+	echo "${BORDER}${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
 else
-  echo "${BORDER}${WEATHER_MAIN} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
+	echo "${BORDER}${WEATHER_MAIN} ${WEATHER_TEMP}${SYMBOL_CELSIUS}${BORDER}"
 fi
 
 if [[ "${WEATHER_TEMP%.*}" -lt "${URGENT_LOWER}" ]] || [[ "${WEATHER_TEMP%.*}" -gt "${URGENT_HIGHER}" ]]; then
-  exit 33
+	exit 33
 fi
