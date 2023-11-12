@@ -163,6 +163,8 @@ bindcode $mod+Shift+$c reload
 bindcode $mod+Shift+$r restart
 bindcode $mod+$pgUp   workspace prev
 bindcode $mod+$pgDown workspace next
+bindcode $mod+Shift+$tab workspace prev
+bindcode $mod+$tab   workspace next
 
 # Scratchpad
 bindcode $mod+Shift+51 move scratchpad
@@ -176,9 +178,9 @@ bindcode --release $mod+Shift+$q exec xkill
 #bindcode $mod+$x exec --no-startup-id dmenu_run  -nb "$barBackground" -nf "$barInActiveText" -sb "$barFocusBackground" -sf "$barText" -fn Tamsyn-9 -h 50 -w 1000 -x $xPos -y $yPos -o 0.8
 bindcode $mod+$x exec --no-startup-id "barBackground=$barBackground barInActiveText=$barInActiveText barFocusBackground=$barFocusBackground barText=$barText ~/.config/i3/scripts/starter"
 bindcode $mod+$alt+$x exec --no-startup-id "barBackground=$barBackground barInActiveText=$barInActiveText barFocusBackground=$barFocusBackground barText=$barText ~/.config/i3/scripts/coder"
-bindcode $mod+Shift+$e exec --no-startup-id ~/.config/i3/scripts/shutdown
+bindcode $mod+Shift+$e exec --no-startup-id "barBackground=$barBackground barInActiveText=$barInActiveText barFocusBackground=$barFocusBackground barText=$barText ~/.config/i3/scripts/shutdown"
 bindcode $mod+Shift+$s exec --no-startup-id "barBackground=$barBackground barInActiveText=$barInActiveText barFocusBackground=$barFocusBackground barText=$barText ~/.config/i3/scripts/slack-state"
-bindcode $mod+Shift+$v exec --no-startup-id ~/.config/i3/scripts/vpn
+bindcode $mod+Shift+$v exec --no-startup-id "barBackground=$barBackground barInActiveText=$barInActiveText barFocusBackground=$barFocusBackground barText=$barText ~/.config/i3/scripts/vpn"
 
 # Apps
 #bindcode $mod+$alt+$g exec --no-startup-id kcolorchooser
@@ -270,7 +272,7 @@ bindcode $mod+$a focus parent
 bindcode $mod+$z focus child
 
 # Chrome Apps
-set $chromeKeep hcfcmgpnmpinpidjdgejehjchlbglpde
+set $chromeKeep eilembjdkfgodjkcjnpgpaenohkicgjd
 # set $chromeGmail fmgjjmmmlfnkbppncabfkddbjimcfncm
 
 # Workspaces
@@ -497,7 +499,7 @@ assign [class="(?i)caprine"] $ws10
 assign [class="wmail"] $wsm
 assign [class="Station"] $wsm
 assign [class="Rambox"] $wsm
-assign [class="Ferdi"] $wsm
+assign [class="Ferdium"] $wsm
 assign [class="Google-chrome" instance=$chromeKeep] $wsn
 assign [class="(?i)Google Play Music Desktop Player"] $wsmm
 assign [class="(?i)youtube-music-desktop-app"] $wsmm
@@ -549,6 +551,93 @@ mode "resize" {
 }
 bindcode $mod+$r mode "resize"
 
+# Mouse controller
+# ----------------
+mode "mouse" {
+
+	# set your three speeds here
+
+	set $slow 10
+	set $quick 50
+	set $fast 200
+
+	# Mouse movement (slow/fine-tuned) -- vim keybindings
+
+	bindsym h exec xdotool mousemove_relative -- -$slow 0
+	bindsym j exec xdotool mousemove_relative 0 $slow
+	bindsym k exec xdotool mousemove_relative -- 0 -$slow
+	bindsym l exec xdotool mousemove_relative $slow 0
+
+	# Mouse movement (slow/fine-tuned) -- arrow keys
+
+	bindsym Left exec xdotool mousemove_relative -- -$slow 0
+	bindsym Down exec xdotool mousemove_relative 0 $slow
+	bindsym Up exec xdotool mousemove_relative -- 0 -$slow
+	bindsym Right exec xdotool mousemove_relative $slow 0
+
+	# Mouse movement (quicker) -- vim keybindings
+
+	bindsym Shift+h exec xdotool mousemove_relative -- -$quick 0
+	bindsym Shift+j exec xdotool mousemove_relative 0 $quick
+	bindsym Shift+k exec xdotool mousemove_relative -- 0 -$quick
+	bindsym Shift+l exec xdotool mousemove_relative $quick 0
+
+	# Mouse movement (quicker) -- arrow keys
+
+	bindsym Shift+Left exec xdotool mousemove_relative -- -$quick 0
+	bindsym Shift+Down exec xdotool mousemove_relative 0 $quick
+	bindsym Shift+Up exec xdotool mousemove_relative -- 0 -$quick
+	bindsym Shift+Right exec xdotool mousemove_relative $quick 0
+
+	# Mouse movement (fast) -- vim keybindings
+
+	bindsym Shift+$alt+h exec xdotool mousemove_relative -- -$fast 0
+	bindsym Shift+$alt+j exec xdotool mousemove_relative 0 $fast
+	bindsym Shift+$alt+k exec xdotool mousemove_relative -- 0 -$fast
+	bindsym Shift+$alt+l exec xdotool mousemove_relative $fast 0
+
+	# Mouse movement (fast) -- arrow keys
+
+	bindsym Shift+$alt+Left exec xdotool mousemove_relative -- -$fast 0
+	bindsym Shift+$alt+Down exec xdotool mousemove_relative 0 $fast
+	bindsym Shift+$alt+Up exec xdotool mousemove_relative -- 0 -$fast
+	bindsym Shift+$alt+Right exec xdotool mousemove_relative $fast 0
+
+	# Left Click
+	bindsym f exec xdotool click 1
+
+	# Middle Click
+	bindsym d exec xdotool click 2
+
+	# Right Click
+	bindsym s exec xdotool click 3
+
+	# Left Click-and-drag
+	bindsym Shift+f exec xdotool mousedown 1
+
+	# Middle Click-and-drag 
+	bindsym Shift+d exec xdotool mousedown 2
+
+	# Right Click-and-drag
+	bindsym Shift+s exec xdotool mousedown 3
+
+	# Left Drag release
+	bindsym $alt+f exec xdotool mouseup 1
+
+	# Middle Drag release
+	bindsym $alt+d exec xdotool mouseup 2
+
+	# Right Drag release
+	bindsym $alt+s exec xdotool mouseup 3
+
+
+	# return to normal keybindings -- IMPORTANT!!
+
+	bindsym Escape mode "default"
+}
+
+bindsym $mod+$alt+Shift+m mode "mouse"
+
 
 # Bar
 # ---
@@ -570,7 +659,7 @@ bar {
   #font pango:Hack, FontAwesome5Free:style=Solid 8
   strip_workspace_numbers no
   tray_padding 2
-  tray_output HDMI-1
+  # tray_output HDMI-1
   separator_symbol " " 
 
   colors {
@@ -677,24 +766,24 @@ exec --no-startup-id "numlockx &"
 exec --no-startup-id redshift-gtk -l 59.91:10.75 &
 #exec --no-startup-id "~/bin/pullover/pullover &"
 exec --no-startup-id "nm-applet &"
-exec --no-startup-id xautolock -time 15 -locker "~/.config/i3/scripts/lock"
+#exec --no-startup-id xautolock -time 15 -locker "~/.config/i3/scripts/lock"
 
 # Apps
 exec --no-startup-id "/usr/bin/rescuetime &"
 #exec --no-startup-id "/opt/openwmail/openWMail &"
 #exec --no-startup-id "/usr/bin/station &"
-exec --no-startup-id "/usr/bin/ferdi &"
+exec --no-startup-id "/usr/bin/ferdium &"
 exec --no-startup-id "caprine &"
 exec --no-startup-id "/usr/bin/enpass &"
 #exec --no-startup-id "/opt/Enpass/bin/runenpass.sh &"
 exec --no-startup-id "~/.fehbg &"
 #exec --no-startup-id "xcompmgr -c &"
-exec --no-startup-id "/usr/bin/gnome-pomodoro --no-default-window &"
-exec --no-startup-id "/usr/bin/i3-gnome-pomodoro daemon &"
+# exec --no-startup-id "/usr/bin/gnome-pomodoro --no-default-window &"
+# exec --no-startup-id "/usr/bin/i3-gnome-pomodoro daemon &"
+exec --no-startup-id "/home/glarsen/Projects/Privat/i3-gnome-pomodoro/pomodoro-client.py daemon &"
 #exec --no-startup-id "compton --config ~/.config/compton.conf &"
 exec --no-startup-id "/usr/bin/blueman-applet &"
 exec --no-startup-id "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=$chromeKeep"
 #exec --no-startup-id "/usr/bin/gkrellm &"
 #exec --no-startup-id "/home/glarsen/Projects/Privat/tibber-feed/current-power.sh"
-
 
