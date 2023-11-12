@@ -60,7 +60,17 @@ map("v", "<A-Down>", ":m '>+1<CR>gv", { desc = "Move line(s) down" })
 
 -- Scroll
 map("n", "<C-Up>", "<C-Y>", { desc = "Scroll screen up" })
+map("n", "<C-k>", "<C-Y>", { desc = "Scroll screen up" })
 map("n", "<C-Down>", "<C-E>", { desc = "Scroll screen down" })
+map("n", "<C-j>", "<C-E>", { desc = "Scroll screen down" })
+
+-- Remove mapping that makes me crazy
+map("n", "<S-Down>", "j")
+map("n", "<S-Up>", "k")
+map("v", "<S-Down>", "k")
+map("v", "<S-Up>", "k")
+map("i", "<S-Down>", "")
+map("i", "<S-Up>", "")
 
 -- Git
 -- Search and replace
