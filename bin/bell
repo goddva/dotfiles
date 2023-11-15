@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+LAST=$(date +%s)
+
+while IFS= read -r line; do
+	printf "\a%s\n" "$line"
+	if (($LAST + 30 < $(date +%s))); then
+		LAST=$(date +%s)
+		notify-send -u critical "Terminal Noise" "${line}"
+	fi
+done
