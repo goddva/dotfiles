@@ -1,0 +1,57 @@
+{
+  "React FC componenet": {
+    "prefix": "rfcc",
+    "body": [
+      "import React from \"react\";",
+      "",
+      "type DefaultProps = {",
+      "  $0",
+      "};",
+      "type ${TM_FILENAME_BASE}Props = React.PropsWithChildren<DefaultProps>;",
+      "",
+      "export const ${TM_FILENAME_BASE}:React.FC<${TM_FILENAME_BASE}Props> = (props) => {",
+      "  const { children } = props;",
+      "  return (",
+      "    <div>",
+      "      {children}",
+      "    </div>",
+      "  );",
+      "}"
+    ]
+  },
+  "Storybook Story": {
+    "prefix": "sbs",
+    "body": [
+      "import { Meta, StoryObj } from '@storybook/react';",
+      "",
+      "import { ${TM_FILENAME/(.*?)\\..*$/$1/} } from './${TM_FILENAME/(.*?)\\..*$/$1/}';",
+      "",
+      "const meta = {",
+      "  component: ${TM_FILENAME/(.*?)\\..*$/$1/},",
+      "  args: {",
+      "    $0",
+      "  },",
+      "  tags: ['autodocs'],",
+      "  parameters: {",
+      "    controls: {},",
+      "    // design: {",
+      "    //   type: 'figma',",
+      "    //   url: '',",
+      "    // },",
+      "    status: {",
+      "      figma: 'na',",
+      "      storybook: 'na',",
+      "      react: 'na',",
+      "      i18n: 'na',",
+      "    },",
+      "    todo: [],",
+      "  },",
+      "} satisfies Meta<typeof ${TM_FILENAME/(.*?)\\..*$/$1/}>;",
+      "export default meta;",
+      "",
+      "type Story = StoryObj<typeof meta>;",
+      "",
+      "export const Default: Story = {};"
+    ]
+  }
+}

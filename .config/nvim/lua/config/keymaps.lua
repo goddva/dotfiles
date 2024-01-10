@@ -72,6 +72,18 @@ map("v", "<S-Up>", "k")
 map("i", "<S-Down>", "")
 map("i", "<S-Up>", "")
 
+map("t", "<C-h>", "")
+map("t", "<C-j>", "")
+map("t", "<C-k>", "")
+map("t", "<C-l>", "")
+vim.keymap.del("t", "<C-l>") -- reset <C-l> back to "clear"
+
+-- Window jumping
+map("n", "<A-S-Left>", "<C-w>h", { desc = "Go to left window", remap = true })
+map("n", "<A-S-Down>", "<C-w>j", { desc = "Go to lower window", remap = true })
+map("n", "<A-S-Up>", "<C-w>k", { desc = "Go to upper window", remap = true })
+map("n", "<A-S-Right>", "<C-w>l", { desc = "Go to right window", remap = true })
+
 -- Git
 -- Search and replace
 map("v", "<C-r>", '"hy:%s/<C-r>h//gc<left><left><left>', { desc = "Search and replace" })
