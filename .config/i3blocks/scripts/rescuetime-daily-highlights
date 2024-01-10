@@ -1,0 +1,57 @@
+#!/bin/bash
+
+echo "      "
+
+API_KEY=$(cat ~/.rescuetime-token)
+
+function main() {
+	DATE_TODAY=$(date +"%Y-%m-%d")
+	curl -s https://www.rescuetime.com/anapi/highlights_feed?key=${API_KEY} |
+		jq -r ".[] | select(.date == \"${DATE_TODAY}\") | .description" |
+		yad \
+			--list \
+			--width=300 --height=200 \
+			--separator=" " \
+			--button="Add!gtk-add":1 \
+			--button="Cancel!gtk-cancel":0 \
+			--column="Daily Highlights"
+	return $?
+}
+
+function addEntry() {
+	DATA=$(
+		yad \
+			--entry \
+			--width=500 \
+			--editable \
+			--button="Add!gtk-add":0 \
+			--button="Cancel!gtk-cancel":1 \
+			--title="Daily Highlights" \
+			--text="New Daily Highlights"
+	)
+
+	if [ "$?" == "0" ]; then
+		DATE_TODAY=$(date +"%Y-%m-%d")
+		curl --data "key=$API_KEY&highlight_date=$DATE_TODAY&description=$DATA" https://www.rescuetime.com/anapi/highlights_post
+		return
+	fi
+
+	# Stop loop
+	ret=0
+}
+
+if [ "$BLOCK_BUTTON" == "1" ]; then
+	ret = 0
+	while [ "$ret" != "0" ]; do
+		main
+		ret=$?
+		echo M: $ret >>/tmp/glenn.log
+		if [ "$ret" == "252" ]; then
+			ret=0
+		fi
+		if [ "$ret" == "1" ]; then
+			addEntry
+		fi
+	done
+	return
+fi
