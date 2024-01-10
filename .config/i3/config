@@ -71,14 +71,20 @@ font  xft:Hack, FontAwesome 6
 
 # Gaps
 # ----
-#hide_edge_borders   none
-hide_edge_borders   both
+hide_edge_borders   none
+# hide_edge_borders   both
+#smart_borders       on
 new_window pixel    $borders
 #new_float pixel     $borders
 new_float pixel     3
-smart_borders       no_gaps
+smart_gaps          inverse_outer
 gaps inner          $gapsi
-gaps outer          $gapso
+# gaps outer          $gapso
+gaps horizontal     500
+
+# Border
+# ------
+#border_radius       6
 
 
 # Windows
@@ -710,7 +716,7 @@ bar {
 # Gaps controller (mod + shift + g)
 # ---------------------------------
 set $mode_gaps Gaps: (o) outer, (i) inner
-set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_outer Outer Gaps: +|-|arrows|0 (local), Shift + +|-|arrows|0 (global)
 set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
 
 bindsym $mod+Shift+g mode "$mode_gaps"
@@ -736,9 +742,13 @@ mode "$mode_gaps_inner" {
 }
 
 mode "$mode_gaps_outer" {
-  bindsym plus  gaps outer current plus 5
-  bindsym minus gaps outer current minus 5
-  bindsym 0     gaps outer current set 0
+  bindsym plus    gaps outer current plus 5
+  bindsym minus   gaps outer current minus 5
+  bindcode $left  gaps horizontal current plus 5
+  bindcode $right gaps horizontal current minus 5
+  bindcode $up    gaps vertical current plus 5
+  bindcode $down  gaps vertical current minus 5
+  bindsym 0       gaps outer current set 0
 
   bindsym Shift+plus  gaps outer all plus 5
   bindsym Shift+minus gaps outer all minus 5
